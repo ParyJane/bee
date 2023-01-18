@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="image">
+<select id="imageSelectAll" resultType="image">
+select
+img_no as imgNo,
+board_no as boardNo,
+original_img_name as originalImageName,
+change_img_name as changeImageName,
+img_path as imgPath,
+img_size as imgSize,
+img_del_yn as imgDelYN
+from feed_image
+where bees_no=#{beesNo}
+and img_del_yn = 'N'
+order by img_no asc
+</select>
+<select id="imageSelectAllBees" resultType="image">
+select
+img_no as imgNo,
+board_no as boardNo,
+original_img_name as originalImageName,
+change_img_name as changeImageName,
+img_path as imgPath,
+img_size as imgSize,
+img_del_yn as imgDelYN
+from feed_image
+where img_del_yn = 'N'
+order by img_no asc
+</select>
+<select id="imageSelectAllMyBees" resultType="image">
+select
+img_no as imgNo,
+board_no as boardNo,
+original_img_name as originalImageName,
+change_img_name as changeImageName,
+img_path as imgPath,
+img_size as imgSize,
+img_del_yn as imgDelYN
+from feed_image
+where bees_no in
+<foreach collection="list" item="item" open="(" close=")" separator=",">
+#{item}
+</foreach>
+and img_del_yn = 'N'
+order by img_no asc
+</select>
+<select id="imageSelectOneFeed" resultType="image">
+select
+img_no as imgNo,
+board_no as boardNo,
+original_img_name as originalImageName,
+change_img_name as changeImageName,
+img_path as imgPath,
+img_size as imgSize,
+img_del_yn as imgDelYN
+from feed_image
+where board_no=#{boardNo}
+and img_del_yn = 'N'
+</select>
+<update id="deleteImage">
+update image set img_del_yn = 'Y' where board_no = #{boardNo}
+</update>
+<update id="deleteImageSeparate">
+update image set img_del_yn = 'Y' where img_no = #{imgNo}
+</update>
+<select id="selectImageNo" resultType="int">
+select img_seq.nextval as imageNo from dual
+</select>
+<insert id="insertImage" parameterType="image">
+insert into image values(#{imgNo}, #{boardNo}, #{originalImageName}, #{changeImageName}, #{imgPath}, #{imgSize}, default, default)
+</insert>
+</mapper>

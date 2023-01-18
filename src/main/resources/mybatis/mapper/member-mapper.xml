@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="member">
+  	<select id="selectLoginMember" parameterType="Member" resultType="Member">
+	SELECT 
+		MEMBER_NO as memberNo,
+		MEMBER_ID as memberId,
+		MEMBER_PW as memberPw,
+		MEMBER_NAME as memberName,
+		MEMBER_EMAIL as memberEmail,
+		MEMBER_PHONE as memberPhone,
+		MEMBER_DATE as memberDate,
+		MEMBER_DEL_YN as delYN,
+		MEMBER_END_DATE memberEndDate,
+		MEMBER_BIRTH memberBirth,
+		MEMBER_ADDR as memberAddr,
+		INTEREST as interest,
+		PROFILE_IMG as profileImg,
+		MEMBER_GENDER as memberGender
+	FROM MEMBER WHERE MEMBER_ID = #{memberId} AND MEMBER_PW = #{memberPw} AND MEMBER_DEL_YN = 'N'
+	</select>
+	
+	<select id="selectLoginMemberNo" parameterType="Member" resultType="Member">
+	SELECT 
+		MEMBER_NO as memberNo,
+		MEMBER_ID as memberId,
+		MEMBER_PW as memberPw,
+		MEMBER_NAME as memberName,
+		MEMBER_EMAIL as memberEmail,
+		MEMBER_PHONE as memberPhone,
+		MEMBER_DATE as memberDate,
+		MEMBER_DEL_YN as delYN,
+		MEMBER_END_DATE memberEndDate,
+		MEMBER_BIRTH memberBirth,
+		MEMBER_ADDR as memberAddr,
+		INTEREST as interest,
+		PROFILE_IMG as profileImg,
+		MEMBER_GENDER as memberGender
+	FROM MEMBER WHERE MEMBER_NO = #{memberNo} AND MEMBER_DEL_YN = 'N'
+	</select>
+	
+	<insert id="insertMemberSignUp" parameterType="Member">
+		INSERT INTO MEMBER VALUES
+		(MEMBER_SEQ.NEXTVAL,
+		#{memberId}, #{memberPw}, #{memberName}, #{memberEmail}, #{memberPhone}, DEFAULT, 'N',
+		DEFAULT, #{memberBirth}, #{memberAddr}, #{interest}, DEFAULT, #{memberGender})
+	</insert>
+	
+	<select id="selectMemberIdCheck" resultType="Member">
+	SELECT 
+		MEMBER_NO as memberNo,
+		MEMBER_ID as memberId,
+		MEMBER_PW as memberPw,
+		MEMBER_NAME as memberName,
+		MEMBER_EMAIL as memberEmail,
+		MEMBER_PHONE as memberPhone,
+		MEMBER_DATE as memberDate,
+		MEMBER_DEL_YN as delYN,
+		MEMBER_END_DATE memberEndDate,
+		MEMBER_BIRTH memberBirth,
+		MEMBER_ADDR as memberAddr,
+		INTEREST as interest,
+		PROFILE_IMG as profileImg,
+		MEMBER_GENDER as memberGender
+	FROM MEMBER WHERE MEMBER_ID = #{memberId}
+	</select>
+  	
+  	<select id="selectMemberEmailCheck" resultType="Member">
+	SELECT 
+		MEMBER_NO as memberNo,
+		MEMBER_ID as memberId,
+		MEMBER_PW as memberPw,
+		MEMBER_NAME as memberName,
+		MEMBER_EMAIL as memberEmail,
+		MEMBER_PHONE as memberPhone,
+		MEMBER_DATE as memberDate,
+		MEMBER_DEL_YN as delYN,
+		MEMBER_END_DATE memberEndDate,
+		MEMBER_BIRTH memberBirth,
+		MEMBER_ADDR as memberAddr,
+		INTEREST as interest,
+		PROFILE_IMG as profileImg,
+		MEMBER_GENDER as memberGender
+	FROM MEMBER WHERE MEMBER_EMAIL = #{memberEmail}
+	</select>
+	
+	<select id="selectMemberPhoneCheck" resultType="Member">
+	SELECT 
+		MEMBER_NO as memberNo,
+		MEMBER_ID as memberId,
+		MEMBER_PW as memberPw,
+		MEMBER_NAME as memberName,
+		MEMBER_EMAIL as memberEmail,
+		MEMBER_PHONE as memberPhone,
+		MEMBER_DATE as memberDate,
+		MEMBER_DEL_YN as delYN,
+		MEMBER_END_DATE memberEndDate,
+		MEMBER_BIRTH memberBirth,
+		MEMBER_ADDR as memberAddr,
+		INTEREST as interest,
+		PROFILE_IMG as profileImg,
+		MEMBER_GENDER as memberGender
+	FROM MEMBER WHERE MEMBER_PHONE = #{receiver}
+	</select>
+	
+	<select id="selectMemberFindId" parameterType="Member" resultType="Member">
+	SELECT 
+		MEMBER_NO as memberNo,
+		MEMBER_ID as memberId,
+		MEMBER_PW as memberPw,
+		MEMBER_NAME as memberName,
+		MEMBER_EMAIL as memberEmail,
+		MEMBER_PHONE as memberPhone,
+		MEMBER_DATE as memberDate,
+		MEMBER_DEL_YN as delYN,
+		MEMBER_END_DATE memberEndDate,
+		MEMBER_BIRTH memberBirth,
+		MEMBER_ADDR as memberAddr,
+		INTEREST as interest,
+		PROFILE_IMG as profileImg,
+		MEMBER_GENDER as memberGender
+	FROM MEMBER WHERE MEMBER_NAME = #{memberName} AND MEMBER_BIRTH = #{memberBirth} AND MEMBER_PHONE = #{memberPhone}
+	</select>
+	
+	<select id="selectMemberFindPw" parameterType="Member" resultType="Member">
+	SELECT 
+		MEMBER_NO as memberNo,
+		MEMBER_ID as memberId,
+		MEMBER_PW as memberPw,
+		MEMBER_NAME as memberName,
+		MEMBER_EMAIL as memberEmail,
+		MEMBER_PHONE as memberPhone,
+		MEMBER_DATE as memberDate,
+		MEMBER_DEL_YN as delYN,
+		MEMBER_END_DATE memberEndDate,
+		MEMBER_BIRTH memberBirth,
+		MEMBER_ADDR as memberAddr,
+		INTEREST as interest,
+		PROFILE_IMG as profileImg,
+		MEMBER_GENDER as memberGender
+	FROM MEMBER WHERE MEMBER_ID = #{memberId} AND MEMBER_NAME = #{memberName} AND MEMBER_PHONE = #{memberPhone}
+	</select>
+	
+	<update id="updateMemberFindPw" parameterType="Member">
+		UPDATE MEMBER SET 
+			MEMBER_PW = #{memberPw}
+		WHERE MEMBER_ID = #{memberId}
+	</update>
+
+
+
+
+
+	
+	<!-- 마이페이지(정평주) -->
+	<update id="updateMemberProfile" parameterType="Member">
+		UPDATE MEMBER SET 
+			 <trim suffixOverrides=",">
+  		 	 <if test = "profileImg != null and profileImg != ''">
+  		 	 	PROFILE_IMG = #{profileImg},
+ 		 	 </if>
+ 		 	 <if test = "memberName != null and memberName != ''">
+ 		 	 	MEMBER_NAME = #{memberName}
+ 			 </if>
+			</trim>
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<update id="memberBirthModify" parameterType="Member">
+		UPDATE MEMBER SET 
+			MEMBER_BIRTH = #{memberBirth}
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<update id="memberGenderModify" parameterType="Member">
+		UPDATE MEMBER SET 
+			member_gender = #{memberGender}
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<select id="myPhoneCheck" resultType="Member">
+	SELECT 
+		MEMBER_NO as memberNo,
+		MEMBER_ID as memberId,
+		MEMBER_PW as memberPw,
+		MEMBER_NAME as memberName,
+		MEMBER_EMAIL as memberEmail,
+		MEMBER_PHONE as memberPhone,
+		MEMBER_DATE as memberDate,
+		MEMBER_DEL_YN as delYN,
+		MEMBER_END_DATE memberEndDate,
+		MEMBER_BIRTH memberBirth,
+		MEMBER_ADDR as memberAddr,
+		INTEREST as interest,
+		PROFILE_IMG as profileImg,
+		MEMBER_GENDER as memberGender
+	FROM MEMBER 
+	WHERE MEMBER_PHONE = #{memberPhone}
+	</select>
+	
+	<update id="memberPhoneModify" parameterType="Member">
+		UPDATE MEMBER SET 
+			MEMBER_PHONE = #{memberPhone}
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<update id="memberEmailModify" parameterType="Member">
+		UPDATE MEMBER SET 
+			member_email = #{memberEmail}
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<select id="memberPwCheck" parameterType="Member" resultType="Member">
+	SELECT 
+		MEMBER_NO as memberNo,
+		MEMBER_ID as memberId,
+		MEMBER_PW as memberPw,
+		MEMBER_NAME as memberName,
+		MEMBER_EMAIL as memberEmail,
+		MEMBER_PHONE as memberPhone,
+		MEMBER_DATE as memberDate,
+		MEMBER_DEL_YN as delYN,
+		MEMBER_END_DATE memberEndDate,
+		MEMBER_BIRTH memberBirth,
+		MEMBER_ADDR as memberAddr,
+		INTEREST as interest,
+		PROFILE_IMG as profileImg,
+		MEMBER_GENDER as memberGender
+	FROM MEMBER WHERE MEMBER_NO = #{memberNo} AND MEMBER_PW = #{memberPw}
+	</select>
+	
+	<update id="memberPwModify" parameterType="Member">
+		UPDATE MEMBER SET 
+			member_pw = #{memberPw}
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<update id="memberDelYN">
+		UPDATE MEMBER SET 
+			member_del_yn = 'Y'
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+</mapper>

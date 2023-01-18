@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="beesAdmin">
+  <!-- <cache-ref namespace="beesAdmin"/> -->
+  
+  <select id="selectBeesAdminList" parameterType="pagingVo" resultType="beesAdmin" >
+  select * from
+	(select rownum num, A.* from
+  		(select 
+  			bees_no as beesNo,
+		  	bees_name as beesName,
+		  	bees_cover as beesCover,
+ 		 	bees_category as beesCategory,
+ 		 	bees_host as beesHost,
+ 		 	bees_public_yn as beesPublicYN,
+		  	bees_cont as beesCont,
+		  	bees_user_limit as beesUserLimit,
+		  	bees_del_yn as beesDelYN,
+		  	bees_max_birth as beesMaxBirth,
+		  	bees_min_birth as beesMinBirth,
+		  	bees_date as beesDate,
+ 		 	bees_del_date as beesDelDate,
+ 		 	member_count as memberCount
+		 from bees
+ 		 join (select bees_no, COUNT(bees_no) as member_count
+					from bees_user
+					where user_block_yn = 'N'
+					and user_del_yn = 'N'
+					and user_auth_yn = 'Y'
+					group by bees_no)
+  		  using(bees_no)
+          order by bees_name, bees_date desc) A) 
+  where num between #{start} and #{end}
+  </select>
+  
+  <select id="countBeesAdmin"  resultType="pagingVo">
+  	select count(*) as totalPage from bees
+  </select>
+  
+  <update id="beesDelete">
+	  update bees set bees_del_yn = 'Y',
+	  				  bees_del_date = systimestamp
+        where bees_no = #{beesNo}
+  </update>
+  
+  <update id="beesRollback">
+	  update bees set bees_del_yn = 'N',
+	  				  bees_del_date = null
+        where bees_no = #{beesNo}
+  </update>
+  
+  
+  <select id="adminBeesSearch" parameterType="beesAdminSearch" resultType="beesAdmin">
+  	   <!-- query안에서 사용되고있는 부등호가 문자열이라는것을 의미 -->
+	   select 
+  			bees_no as beesNo,
+  			bees_name as beesName,
+  			bees_cover as beesCover,
+  			bees_category as beesCategory,
+  			bees_host as beesHost,
+  			bees_public_yn as beesPublicYN,
+  			bees_cont as beesCont,
+  			bees_user_limit as beesUserLimit,
+  			bees_del_yn as beesDelYN,
+ 		 	bees_max_birth as beesMaxBirth,
+ 		 	bees_min_birth as beesMinBirth,
+  			bees_date as beesDate,
+  			bees_del_date as beesDelDate,
+  			member_count as memberCount
+ 		 from bees
+  		 join (select bees_no, COUNT(bees_no) as member_count
+			from bees_user
+			where user_block_yn = 'N'
+			and user_del_yn = 'N'
+			and user_auth_yn = 'Y'
+			group by bees_no)
+  		 using(bees_no)
+  		 <trim prefix="WHERE" prefixOverrides="AND|OR">
+  		 	<if test = "startDate != null">
+ 		 		#{startDate} <![CDATA[  <= ]]> to_char(bees_date,'YYYY-MM-DD')
+ 		 	</if>
+ 		 	<if test = "endDate != null">
+ 				 and to_char(bees_date,'YYYY-MM-DD') <![CDATA[  <= ]]> #{endDate}
+ 			</if>
+ 			<if test = "startDate == null and endDate == null">
+ 				and bees_name like '%' || #{search} || '%' 
+ 				or bees_host like '%' || #{search} || '%'
+ 			</if>
+ 			<if test="searchSelect == 1">
+ 				and bees_name like '%' || #{search} || '%' 
+ 				or bees_host like '%' || #{search} || '%'
+ 			</if>
+ 			<if test="searchSelect == 2">
+ 				 and bees_category like '%' || #{search} || '%'
+ 			</if>
+ 			<if test="searchSelect == 3">
+ 				 and bees_name like '%' || #{search} || '%'
+ 			</if>
+ 			<if test="searchSelect == 4">
+ 				 and bees_host like '%' || #{search} || '%'
+ 			</if>
+  	     </trim>
+  </select>
+  
+  
+  
+</mapper>

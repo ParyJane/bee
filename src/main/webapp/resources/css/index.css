@@ -1,0 +1,102 @@
+	* {
+		font-family: 'Noto Sans KR', sans-serif;	
+	}
+	
+	body {
+		background-color:#F9F9F9;
+	}
+	
+	input:focus {outline:none;}
+	
+	input::placeholder {
+		text-align:center;
+  		color: #707070;
+  		opacity: 0.5;
+	}
+
+	input[type=text], input[type=password] { 
+		width: 90%; 
+		padding: 12px 20px;
+		margin: 8px auto; 
+		display: block; 
+		border: 1px solid #50401B; 
+		border-radius: 25px; 
+		box-sizing: border-box; 
+	}
+	
+	input[type=submit] { 
+		font-weight:bold;
+		width: 90%; 
+		padding: 12px 20px;
+		margin: 8px auto; 
+		display: block; 
+		background-color: #50401B;
+		color:white;
+		border-radius: 25px; 
+		box-sizing: border-box; 
+	}
+	
+	input[type=submit]:hover {
+		font-weight:bold;
+		width: 90%; 
+		padding: 12px 20px;
+		margin: 8px auto; 
+		display: block; 
+		background-color: white;
+		color:#50401B;
+		border:1px solid #50401B;
+		border-radius: 25px; 
+		box-sizing: border-box; 
+	}
+	
+
+	hr {
+    	border: 0;
+    	height: 1px;
+    	background: #50401B;
+	}
+	
+	.findInfo {
+		text-decoration: none;
+		color: #50401B;
+		font-weight:bold;
+		font-size:0.9em;
+	}
+	
+	.findInfo:hover {
+		color: #50401B;
+		font-size:0.9em;
+	}
+	
+	
+	
+	#joinBtn{ 
+		width:50%;
+		font-weight:bold;
+	    text-decoration: none;
+	    color:white;
+	    padding: 12px 20px;
+		margin: 8px auto; 
+	    display: inline-block;
+	    border : 1px solid #50401B;
+	    border-radius: 25px;
+	    background-color: #50401B;
+    }
+
+	#joinBtn:hover {
+		width:50%;
+		font-weight:bold;
+		text-decoration: none;
+	    color:#50401B;
+	    padding: 12px 20px;
+		margin: 8px auto; 
+	    display: inline-block;
+	    border : 1px solid #50401B;
+	    border-radius: 25px;
+	    background-color: white;
+	}
+	
+	.message {
+		color:red;
+		font-size:0.8em;
+	}

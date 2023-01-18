@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="bees">
+	<insert id="insertBee" parameterType="Bees">
+	insert into BEES values (BEES_SEQ.NEXTVAL,#{beesName},#{beesCover},#{beesCategory},#{beesHost},#{beesPublicYN},'',0,'N','N',0,0,SYSTIMESTAMP,'')
+	</insert>
+	<insert id="insertHostBeeUser" parameterType="Bees">
+	insert into bees_user values(USER_SEQ.NEXTVAL,BEES_SEQ.CURRVAL,#{beesHostNo},#{beesHostName},'host','N','N','Y',SYSTIMESTAMP,SYSTIMESTAMP)	
+	</insert>
+	<insert id="insertSetting" parameterType="Bees">
+	insert into setting values (SET_SEQ.NEXTVAL,BEES_SEQ.CURRVAL,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
+	</insert>
+  	<select id="selectBeeSetting" parameterType="Bees" resultType="Bees">
+  	select
+  		BEES_NO as beesNo,
+  		BEES_NAME as beesName,
+  		BEES_COVER as beesCover,
+  		BEES_CATEGORY as beesCategory,     
+  		BEES_HOST as beesHost,
+  		BEES_PUBLIC_YN as beesPublicYN,
+  		BEES_CONT as beesCont,
+  		BEES_USER_LIMIT as beesUserLimit,
+  		BEES_DEL_YN as beesDelYN,
+  		BEES_GENDER as beesGender,
+  		BEES_MAX_BIRTH as beesMaxBirth,
+  		BEES_MIN_BIRTH as beesMinBirth,
+  		BEES_DATE as beesDate,
+  		BEES_DEL_DATE as beesDelDate
+  	from BEES where BEES_NO = #{beesNo}
+  	</select>
+	<update id="updateBeeSettingCover">
+		UPDATE BEES
+			SET
+				BEES_NAME = #{beesName},
+				BEES_COVER = #{beesCover}				
+		where BEES_NO = #{beesNo}
+	</update>
+	<update id="updateBeeSettingType">
+		UPDATE BEES
+			SET
+				BEES_PUBLIC_YN = #{beesPublicYN}			
+		where BEES_NO = #{beesNo}
+	</update>
+	<update id="updateBeeSettingIntro">
+		UPDATE BEES
+			SET
+				BEES_CONT = #{beesCont}			
+		where BEES_NO = #{beesNo}
+	</update>
+	<update id="updateBeeSettingMaxMember">
+		UPDATE BEES
+			SET
+				BEES_USER_LIMIT = #{beesUserLimit}			
+		where BEES_NO = #{beesNo}
+	</update>
+	<update id="updateBeeSettingJoinStandard">
+		UPDATE BEES
+			SET
+				BEES_GENDER = #{beesGender},
+				BEES_MAX_BIRTH = #{beesMaxBirth},
+				BEES_MIN_BIRTH = #{beesMinBirth}			
+		where BEES_NO = #{beesNo}
+	</update>
+	<select id="selectBeesUser" parameterType="beesUserList" resultType="beesUserList">
+		select
+		BEES_USER.USER_NO as userNo,
+		BEES_USER.BEES_NO as beesNo,
+		BEES_USER.MEMBER_NO as memberNo,
+		BEES_USER.USER_NAME as userName,
+		BEES_USER.USER_CLASS as userClass,
+		BEES_USER.USER_BLOCK_YN as userBlockYN,
+		BEES_USER.USER_DEL_YN as userDelYN,
+		BEES_USER.USER_AUTH_YN as userAuthYN,
+		MEMBER.MEMBER_ID as memberId,
+		MEMBER.PROFILE_IMG as profileImg
+		from Bees_User left join bees On bees_user.bees_no=bees.bees_no left join member On bees_user.member_no=member.member_no
+		where bees_user.BEES_NO=#{beesNo} and bees_user.user_del_yn='N' and bees_user.user_auth_yn='Y'
+	</select>
+	<select id="selectBeesManager" parameterType="beesUserList" resultType="beesUserList">
+		select
+		BEES_USER.USER_NO as userNo,
+		BEES_USER.BEES_NO as beesNo,
+		BEES_USER.MEMBER_NO as memberNo,
+		BEES_USER.USER_NAME as userName,
+		BEES_USER.USER_CLASS as userClass,
+		BEES_USER.USER_BLOCK_YN as userBlockYN,
+		BEES_USER.USER_DEL_YN as userDelYN,
+		BEES_USER.USER_AUTH_YN as userAuthYN,
+		MEMBER.MEMBER_ID as memberId,
+		MEMBER.PROFILE_IMG as profileImg
+		from Bees_User left join bees On bees_user.bees_no=bees.bees_no left join member On bees_user.member_no=member.member_no
+		where bees_user.BEES_NO=#{beesNo} and bees_user.user_class='manager' and bees_user.user_del_yn='N' and bees_user.user_auth_yn='Y'
+	</select>
+	<select id="selectBeesOnlyUser" parameterType="beesUserList" resultType="beesUserList">
+		select
+		BEES_USER.USER_NO as userNo,
+		BEES_USER.BEES_NO as beesNo,
+		BEES_USER.MEMBER_NO as memberNo,
+		BEES_USER.USER_NAME as userName,
+		BEES_USER.USER_CLASS as userClass,
+		BEES_USER.USER_BLOCK_YN as userBlockYN,
+		BEES_USER.USER_DEL_YN as userDelYN,
+		BEES_USER.USER_AUTH_YN as userAuthYN,
+		MEMBER.MEMBER_ID as memberId,
+		MEMBER.PROFILE_IMG as profileImg
+		from Bees_User left join bees On bees_user.bees_no=bees.bees_no left join member On bees_user.member_no=member.member_no
+		where bees_user.BEES_NO=#{beesNo} and bees_user.user_class='user' and bees_user.user_del_yn='N' and bees_user.user_auth_yn='Y'
+	</select>
+	<select id="selectBeesBlock" parameterType="beesUserList" resultType="beesUserList">
+		select
+		BEES_USER.USER_NO as userNo,
+		BEES_USER.BEES_NO as beesNo,
+		BEES_USER.MEMBER_NO as memberNo,
+		BEES_USER.USER_NAME as userName,
+		BEES_USER.USER_CLASS as userClass,
+		BEES_USER.USER_BLOCK_YN as userBlockYN,
+		BEES_USER.USER_DEL_YN as userDelYN,
+		BEES_USER.USER_AUTH_YN as userAuthYN,
+		MEMBER.MEMBER_ID as memberId,
+		MEMBER.PROFILE_IMG as profileImg
+		from Bees_User left join bees On bees_user.bees_no=bees.bees_no left join member On bees_user.member_no=member.member_no
+		where bees_user.BEES_NO=#{beesNo} and bees_user.user_block_yn='Y' and bees_user.user_del_yn='Y' and bees_user.user_auth_yn='Y'
+	</select>
+	<select id="selectBeeMemberPermission" parameterType="Setting" resultType="Setting">
+  	select
+  		SET_NO as setNO,
+  		BEES_NO as beesNo,
+  		SET_NOTICE as setNotice,
+  		SET_WRITE as setWrite,
+  		SET_COMMENT as setComment,
+  		SET_CONT_DEL as setContDel,
+  		SET_SCHE_REGIST as setScheRegist,
+  		SET_SCHE_MODIFY as setScheModify,
+  		SET_CHAT_OPEN as setChatOpen,
+  		SET_CHAT_DEL as setChatDel,
+  		SET_USER_INVITE as setUserInvite,
+  		SET_USER_PERMIT as setUserPermit,
+  		SET_USER_CONDI as setUserCondi,
+  		SET_USER_BLOCK as setUserBlock 
+  	from SETTING where BEES_NO = #{beesNo}
+  	</select>
+  	<update id="updateBeeOneWithdraw">
+		UPDATE BEES_USER
+			SET
+			USER_DEL_YN='Y'		
+		where MEMBER_NO = #{memberNo} and BEES_NO = #{beesNo}
+	</update>
+	<update id="updateBeeOneDelete">
+		UPDATE BEES
+			SET
+			BEES_DEL_YN='Y',
+			BEES_DEL_DATE=SYSTIMESTAMP 	
+		where BEES_NO = #{beesNo} 
+	</update>
+	<update id="updateBeeMemberPermissionSet">
+		UPDATE SETTING
+			SET
+			SET_NOTICE = #{setNotice},
+	  		SET_WRITE = #{setWrite},
+	  		SET_COMMENT = #{setComment},
+	  		SET_CONT_DEL = #{setContDel},
+	  		SET_SCHE_REGIST = #{setScheRegist},
+	  		SET_SCHE_MODIFY = #{setScheModify},
+	  		SET_CHAT_OPEN = #{setChatOpen},
+	  		SET_CHAT_DEL = #{setChatDel},
+	  		SET_USER_INVITE = #{setUserInvite},
+	  		SET_USER_PERMIT = #{setUserPermit},
+	  		SET_USER_CONDI = #{setUserCondi},
+	  		SET_USER_BLOCK = #{setUserBlock} 
+		where BEES_NO = #{beesNo}
+	</update>
+	<update id="updateManagerToUser">
+		UPDATE BEES_USER
+			SET
+			USER_CLASS='user'		
+		where MEMBER_NO = #{memberNo} and BEES_NO = #{beesNo}
+	</update>
+	<update id="updateMemberWithdraw">
+		UPDATE BEES_USER
+			SET
+			USER_DEL_YN='Y'		
+		where MEMBER_NO = #{memberNo} and BEES_NO = #{beesNo}
+	</update>
+	<update id="subMemberWithdrawBlockSet">
+		UPDATE BEES_USER
+			SET
+			USER_BLOCK_YN='Y',
+			USER_DEL_YN='Y'		
+		where MEMBER_NO = #{memberNo} and BEES_NO = #{beesNo}
+	</update>
+	<update id="subMemberBlockDeleteSet">
+		UPDATE BEES_USER
+			SET
+			USER_BLOCK_YN='N',
+			USER_DEL_YN='Y'		
+		where MEMBER_NO = #{memberNo} and BEES_NO = #{beesNo}
+	</update>
+	<update id="updatesubJoinManagerSet">
+		UPDATE BEES_USER
+			SET
+			USER_CLASS='manager'		
+		where MEMBER_NO = #{memberNo} and BEES_NO = #{beesNo}
+	</update>
+	
+	
+	
+	<select id="selectRecommendBees" parameterType="recommendSearch" resultType="beesUserCount">
+	SELECT 
+		B.BEES_NO AS beesNo,
+	    B.BEES_NAME AS beesName,
+	    B.BEES_COVER AS beesCover,
+	    B.BEES_CATEGORY AS beesCategory,
+	    B.BEES_HOST AS beesHost,
+	    B.BEES_PUBLIC_YN AS beesPublicYN,
+	    B.BEES_CONT AS beesCont,
+	    B.BEES_USER_LIMIT AS beesUserLimit,
+	    B.BEES_DEL_YN AS beesDelYN,
+	    B.BEES_GENDER AS beesGender,
+	    B.BEES_MAX_BIRTH AS beesMaxBirth,
+	    B.BEES_MIN_BIRTH AS beesMinBirth,
+	    B.BEES_DATE AS beesDate,
+	    B.BEES_DEL_DATE AS beesDelDate,
+	    NVL(BU.COUNT, 0) as beesUserCount
+	FROM BEES B 
+	LEFT JOIN 
+    (SELECT BEES_NO, COUNT(*) AS COUNT FROM BEES_USER
+    GROUP BY BEES_NO ORDER BY COUNT(*) DESC) BU
+	ON B.BEES_NO = BU.BEES_NO
+	WHERE B.BEES_CATEGORY IN
+		<foreach item="interest" collection="interest" open="(" separator="," close=")">
+				#{interest}
+		</foreach>
+	AND B.BEES_NO NOT IN (SELECT BEES_NO FROM BEES_USER WHERE MEMBER_NO = #{sessionMemberNo})
+	AND B.BEES_PUBLIC_YN = 'Y' AND BEES_DEL_YN = 'N'
+	</select>
+	
+	<select id="selectMyBees" parameterType="Member" resultType="bees">
+	SELECT 
+		BEES_NO AS beesNo,
+	    BEES_NAME AS beesName,
+	    BEES_COVER AS beesCover,
+	    BEES_CATEGORY AS beesCategory,
+	    BEES_HOST AS beesHost,
+	    BEES_PUBLIC_YN AS beesPublicYN,
+	    BEES_CONT AS beesCont,
+	    BEES_USER_LIMIT AS beesUserLimit,
+	    BEES_DEL_YN AS beesDelYN,
+	    BEES_GENDER AS beesGender,
+	    BEES_MAX_BIRTH AS beesMaxBirth,
+	    BEES_MIN_BIRTH AS beesMinBirth,
+	    BEES_DATE AS beesDate,
+	    BEES_DEL_DATE AS beesDelDate
+	FROM BEES 
+	WHERE BEES_NO IN 
+	(SELECT BEES_NO FROM BEES_USER 
+	WHERE MEMBER_NO = #{memberNo} AND USER_BLOCK_YN = 'N' 
+	AND USER_DEL_YN = 'N' AND USER_AUTH_YN = 'Y') AND BEES_DEL_YN = 'N'
+	</select>
+	
+	<select id="selectCategoryRecommendBees" parameterType="categorySearch" resultType="beesUserCount">
+	SELECT 
+		B.BEES_NO AS beesNo,
+	    B.BEES_NAME AS beesName,
+	    B.BEES_COVER AS beesCover,
+	    B.BEES_CATEGORY AS beesCategory,
+	    B.BEES_HOST AS beesHost,
+	    B.BEES_PUBLIC_YN AS beesPublicYN,
+	    B.BEES_CONT AS beesCont,
+	    B.BEES_USER_LIMIT AS beesUserLimit,
+	    B.BEES_DEL_YN AS beesDelYN,
+	    B.BEES_GENDER AS beesGender,
+	    B.BEES_MAX_BIRTH AS beesMaxBirth,
+	    B.BEES_MIN_BIRTH AS beesMinBirth,
+	    B.BEES_DATE AS beesDate,
+	    B.BEES_DEL_DATE AS beesDelDate,
+	    NVL(BU.COUNT, 0) as beesUserCount
+	FROM BEES B 
+	LEFT JOIN 
+    (SELECT BEES_NO, COUNT(*) AS COUNT FROM BEES_USER
+    GROUP BY BEES_NO ORDER BY COUNT(*) DESC) BU
+	ON B.BEES_NO = BU.BEES_NO
+	WHERE B.BEES_CATEGORY = #{category}
+	AND B.BEES_NO NOT IN (SELECT BEES_NO FROM BEES_USER WHERE MEMBER_NO = #{sessionMemberNo})
+	AND B.BEES_PUBLIC_YN = 'Y' AND BEES_DEL_YN = 'N'
+	</select>
+	
+	<select id="selectBeesSearchResult" resultType="beesUserCount">
+	SELECT 
+		B.BEES_NO AS beesNo,
+	    B.BEES_NAME AS beesName,
+	    B.BEES_COVER AS beesCover,
+	    B.BEES_CATEGORY AS beesCategory,
+	    B.BEES_HOST AS beesHost,
+	    B.BEES_PUBLIC_YN AS beesPublicYN,
+	    B.BEES_CONT AS beesCont,
+	    B.BEES_USER_LIMIT AS beesUserLimit,
+	    B.BEES_DEL_YN AS beesDelYN,
+	    B.BEES_GENDER AS beesGender,
+	    B.BEES_MAX_BIRTH AS beesMaxBirth,
+	    B.BEES_MIN_BIRTH AS beesMinBirth,
+	    B.BEES_DATE AS beesDate,
+	    B.BEES_DEL_DATE AS beesDelDate,
+	    NVL(BU.COUNT, 0) as beesUserCount
+	FROM BEES B 
+	LEFT JOIN 
+    (SELECT BEES_NO, COUNT(*) AS COUNT FROM BEES_USER
+    GROUP BY BEES_NO ORDER BY COUNT(*) DESC) BU
+	ON B.BEES_NO = BU.BEES_NO
+	WHERE B.BEES_NAME like ('%'||#{searchData}||'%')
+	AND B.BEES_PUBLIC_YN = 'Y' AND BEES_DEL_YN = 'N'
+	</select>
+	
+	<select id="beesSelectOne" resultType="Bees">
+	select
+	bees_no as beesNo,
+	bees_name as beesName,
+	bees_cover as beesCover,
+	bees_category as beesCategory,
+	bees_host as beesHost,
+	bees_public_yn as beesPublicYN,
+	bees_cont as beesCont,
+	bees_user_limit as beesUserLimit,
+	bees_del_yn as beesDelYN,
+	bees_gender as beesGender,
+	bees_max_birth as beesMaxBirth,
+	bees_min_birth as beesMinBirth
+	from bees
+	where bees_no = #{bees_no} and bees_del_yn='N'
+	</select>
+
+
+<!-- 수정예정 -->
+
+	<select id="selectBeesSchedule" parameterType="ScheduleList"
+		resultType="ScheduleList">
+
+		select
+		schedule.schedule_no as scheduleNo,
+		schedule.user_no as userNo,
+		schedule.bees_no as beesNo,
+		schedule.schedule_title as scheduleTitle,
+		schedule.schedule_cont as scheduleCont,
+		schedule.schedule_start_date as scheduleStartDate,
+		schedule.schedule_end_date as scheduleEndDate,
+		schedule.board_no as boardNo,
+		member.member_no as memberNo,
+		member.profile_Img as profileImg,
+		bees_user.user_name as userName
+		from schedule left join bees_user on schedule.user_no=bees_user.user_no
+		left join member on bees_user.member_no=member.member_no
+		where schedule.bees_no=#{beesNo}
+
+	</select>
+
+
+	<insert id="insertScheDate"
+		parameterType="com.fourmeeting.bee.schedule.model.vo.ScheduleInsert">
+		insert ALL
+		into board values(board_no_seq.nextval, #{memberNo}, #{beesNo}, systimestamp, '0', '', schedule_seq.nextval, '0', '0', '','N','N')
+		into schedule values(schedule_seq.currval, #{userNo}, #{beesNo}, #{scheduleTitle}, #{scheduleCont}, #{scheduleStartDate},
+		#{scheduleEndDate}, BOARD_NO_SEQ.currval)
+		select * from DUAL
+
+	</insert>
+
+	<select id="selectScheContList" parameterType="ScheduleDetail"
+		resultType="ScheduleDetail">
+		select
+		schedule_no as scheduleNo,
+		user_no as userNo,
+		user_name as userName,
+		bees_no as beesNo,
+		board_no as boardNo,
+		schedule_title as scheduleTitle,
+		schedule_cont as scheduleCont,
+		schedule_start_date as scheduleStartDate,
+		schedule_end_date as scheduleEndDate,
+		profile_img as profileImg
+		from schedule_detail
+		where schedule_no = #{scheduleNo}
+	</select>
+
+	<delete id="deleteBeesSchedule">
+		delete from schedule where schedule_no=#{scheduleNo}
+		
+	</delete>
+		
+	<update id="updateBeesBoard">
+		update board set board_del_yn='Y' where schedule_no=#{scheduleNo}
+	</update>
+	
+	<update id="updateScheduleCont"  parameterType="ScheduleDetail">
+		update schedule set schedule_cont=#{scheduleCont} where schedule_no=#{scheduleNo}
+	</update>
+	
+	
+	
+	<select id="selectBeesUserInfo" parameterType="BeesUser" resultType="BeesUser">
+			select
+			user_no as userNo,
+			bees_no as beesNo,
+			member_no as memberNo,
+			user_name as userName,
+			user_class as userClass,
+			user_block_YN as userBlockYN,
+			user_del_YN as userDelYN,
+			user_auth_YN as userAuthYN,
+			user_auth_date as userAuthDate,
+			user_ask_date as userAskDate
+			from bees_user where member_no=#{memberNo} and bees_no=#{beesNo}
+	</select>
+</mapper>

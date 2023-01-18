@@ -1,0 +1,220 @@
+* {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+	background-color: #F9F9F9;
+}
+
+/*
+	div {
+		border:1px solid black;
+		box-sizing: border-box;
+	}
+	*/
+.formTitle {
+	font-weight: bold;
+	color: #50401B;
+}
+
+input:focus {outline:none;}
+
+input::placeholder {
+	color: #707070;
+	opacity: 0.5;
+}
+
+input:read-only {
+	background-color: #D9D9D9;
+}
+
+input[type=text], input[type=password] {
+	width: 100%;
+	padding: 10px 15px;
+	display: block;
+	border: 1px solid #50401B;
+	border-radius: 20px;
+	box-sizing: border-box;
+}
+
+input[type=checkbox] {
+	display: none;
+}
+
+input[type=checkbox]+label[for=meet] {
+	display: inline-block;
+	width:100px;
+	height:120px;
+	background: url('/resources/image/hobby_meet.PNG') no-repeat;
+	background-size: cover;
+	box-shadow: 2px 2px 2px 2px #ECECEC;
+}
+
+input[type=checkbox]:checked + label[for=meet] {
+		display: inline-block;
+		width:100px;
+		height:120px;
+		background: url('/resources/image/hobby_meet_checked.png');
+		background-size: cover;
+		box-shadow: 2px 2px 2px 2px #ECECEC;
+}
+
+input[type=checkbox]+label[for=study] {
+	display: inline-block;
+	width:100px;
+	height:120px;
+	background: url('/resources/image/hobby_study.PNG') no-repeat;
+	background-size: cover;
+	box-shadow: 2px 2px 2px 2px #ECECEC;
+}
+
+input[type=checkbox]:checked + label[for=study] {
+		display: inline-block;
+		width:100px;
+		height:120px;
+		background: url('/resources/image/hobby_study_checked.png');
+		background-size: cover;
+		box-shadow: 2px 2px 2px 2px #ECECEC;
+}
+
+input[type=checkbox]+label[for=game] {
+	display: inline-block;
+	width:100px;
+	height:120px;
+	background: url('/resources/image/hobby_game.PNG') no-repeat;
+	background-size: cover;
+	box-shadow: 2px 2px 2px 2px #ECECEC;
+}
+
+input[type=checkbox]:checked + label[for=game] {
+		display: inline-block;
+		width:100px;
+		height:120px;
+		background: url('/resources/image/hobby_game_checked.png');
+		background-size: cover;
+		box-shadow: 2px 2px 2px 2px #ECECEC;
+}
+
+input[type=checkbox]+label[for=exercise] {
+	display: inline-block;
+	width:100px;
+	height:120px;
+	background: url('/resources/image/hobby_exercise.PNG') no-repeat;
+	background-size: cover; 
+	box-shadow: 2px 2px 2px 2px #ECECEC;
+}
+
+input[type=checkbox]:checked + label[for=exercise] {
+		display: inline-block;
+		width:100px;
+		height:120px;
+		background: url('/resources/image/hobby_exercise_checked.png');
+		background-size: cover;
+		box-shadow: 2px 2px 2px 2px #ECECEC;
+}
+
+input[type=checkbox]+label[for=area] {
+	display: inline-block;
+	width:100px;
+	height:120px;
+	background: url('/resources/image/hobby_area.PNG') no-repeat;
+	background-size: cover;
+	box-shadow: 2px 2px 2px 2px #ECECEC;
+}
+
+input[type=checkbox]:checked + label[for=area] {
+		display: inline-block;
+		width:100px;
+		height:120px;
+		background: url('/resources/image/hobby_area_checked.png');
+		background-size: cover;
+		box-shadow: 2px 2px 2px 2px #ECECEC;
+}
+	
+input[type=checkbox]+label[for=etc]{
+	display: inline-block;
+	width:100px;
+	height:120px;
+	background: url('/resources/image/hobby_etc.PNG');
+	background-size: cover;
+	box-shadow: 2px 2px 2px 2px #ECECEC;
+}
+
+input[type=checkbox]:checked + label[for=etc] {
+		display: inline-block;
+		width:100px;
+		height:120px;
+		background: url('/resources/image/hobby_etc_checked.png');
+		background-size: cover;
+		box-shadow: 2px 2px 2px 2px #ECECEC;
+	}
+
+
+input[type=submit] {
+	font-size:0.9em;
+	font-weight: bold;
+	text-decoration: none;
+	color: white;
+	padding: 12px 20px;
+	margin: 8px auto;
+	display: inline-block;
+	border: 1px solid #50401B;
+	border-radius: 25px;
+	background-color: #50401B;
+}
+
+
+input[type=submit]:hover {
+	font-weight: bold;
+	text-decoration: none;
+	color: #50401B;
+	padding: 12px 20px;
+	margin: 8px auto;
+	display: inline-block;
+	border: 1px solid #50401B;
+	border-radius: 25px;
+	background-color: white;
+}
+
+.btn {
+	font-size:0.9em;
+	font-weight: bold;
+	text-decoration: none;
+	color: white;
+	padding: 10px 15px;
+	margin: 8px auto;
+	display: inline-block;
+	border: 1px solid #50401B;
+	border-radius: 25px;
+	background-color: #50401B;
+}
+
+.btn:hover {
+	font-weight: bold;
+	text-decoration: none;
+	color: #50401B;
+	padding: 10px 15px;
+	margin: 8px auto;
+	display: inline-block;
+	border: 1px solid #50401B;
+	border-radius: 25px;
+	background-color: white;
+}
+
+.checkMessage {
+	color: red;
+	font-size: 0.8em;
+}
+
+.birth {
+	border: 1px solid #50401B;
+	border-radius: 20px;
+}
+
+#footer {
+	width: 100%;
+	height: 100px;
+	background-color: #50401B;
+}

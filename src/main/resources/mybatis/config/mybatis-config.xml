@@ -1,0 +1,50 @@
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+<typeAliases>
+<typeAlias type="com.fourmeeting.bee.member.model.vo.Member" alias="Member" />
+<typeAlias type="com.fourmeeting.bee.userpage.model.vo.RecommendBees" alias="recommendSearch"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.userpage.model.vo.CategoryRecommendBees" alias="categorySearch"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.bees.model.vo.Bees" alias="Bees"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.bees.model.vo.BeesUserCount" alias="beesUserCount"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.bees.model.vo.Setting" alias="Setting"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.beesuser.model.vo.BeesUser" alias="BeesUser"></typeAlias>
+
+<typeAlias type="com.fourmeeting.bee.beesuser.model.vo.BeesUserSelect" alias="BeesUserSelect"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.notice.model.vo.Notice" alias="notice"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.beesuser.model.vo.BeesUserList" alias="BeesUserList"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.beesuser.model.vo.UserSelect" alias="userSelect"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.board.model.vo.Board" alias="board"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.board.model.vo.BoardLike" alias="boardLike"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.board.model.vo.BoardPaging" alias="boardPaging"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.board.model.vo.Feed" alias="feed"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.board.model.vo.ModifyFeed" alias="modifyfeed"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.comment.model.vo.FeedComment" alias="feedComment"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.comment.model.vo.BeesComment" alias="beesComment"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.vote.model.vo.FeedVote" alias="feedVote"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.vote.model.vo.Vote" alias="vote"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.vote.model.vo.VoteChoice" alias="voteChoice"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.file.model.vo.BeesFile" alias="beesFile"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.image.model.vo.Image" alias="image"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.schedule.model.vo.Schedule" alias="schedule"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.schedule.model.vo.ScheduleDetail" alias="scheduleDetail"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.schedule.model.vo.ScheduleInsert" alias="ScheduleInsert"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.schedule.model.vo.ScheduleList" alias="ScheduleList"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.admin.model.vo.MemberManagement" alias="memberManagement"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.admin.model.vo.Criteria" alias="criteria"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.image.model.vo.AttachFileDTO" alias="attachFileDTO"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.admin.model.vo.Search" alias="search"></typeAlias>
+
+
+
+<typeAlias type="com.fourmeeting.bee.bees.model.vo.BeesAdmin" alias="beesAdmin"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.bees.model.vo.BeesAdminSearch" alias="beesAdminSearch"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.question.model.vo.QnA" alias="qna"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.question.model.vo.Question" alias="question"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.question.model.vo.AdminQuestionSearch" alias="adminQuestionSearch"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.answer.model.vo.Answer" alias="answer"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.beesuser.model.vo.MyBeesUser" alias="myBeesUser"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.comment.model.vo.MyComment" alias="myComment"></typeAlias>
+<typeAlias type="com.fourmeeting.bee.PagingVO" alias="pagingVo"></typeAlias>
+
+</typeAliases>
+</configuration>

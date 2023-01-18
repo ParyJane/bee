@@ -1,0 +1,20 @@
+input:focus {
+	outline: none;
+}
+
+button:focus {
+	outline: none;
+}
+
+textarea:focus {
+	outline: none;
+}
+
+a:hover{
+	text-decoration:none;
+}
+
+* {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+

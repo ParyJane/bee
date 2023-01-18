@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="board">
+<select id="boardSelectAll" resultType="feed">
+select 
+board_no as boardNo,
+bees_no as beesNo,
+board_date as boardDate,
+board_cont as boardCont,
+vote_no as voteNo,
+schedule_no as scheduleNo,
+file_no as fileNo,
+img_no as imgNo,
+board_del_date as boardDelDate,
+board_del_yn as boardDelYN,
+user_name as userName,
+profile_img as profileImg,
+member_no as memberNo,
+NVL(like_count,0) as likeCount,
+NVL(comment_count,0) as commentCount,
+bees_name as beesName
+from bees_feed 
+where bees_no=#{beesNo}
+and board_del_yn = 'N'
+order by board_date desc
+</select>
+<select id="boardSelectMine" resultType="feed">
+select 
+board_no as boardNo,
+bees_no as beesNo,
+board_date as boardDate,
+board_cont as boardCont,
+vote_no as voteNo,
+schedule_no as scheduleNo,
+file_no as fileNo,
+img_no as imgNo,
+board_del_date as boardDelDate,
+board_del_yn as boardDelYN,
+user_name as userName,
+profile_img as profileImg,
+member_no as memberNo,
+NVL(like_count,0) as likeCount,
+NVL(comment_count,0) as commentCount,
+bees_name as beesName
+from bees_feed 
+where member_no=#{memberNo}
+and board_del_yn = 'N'
+order by board_date desc
+</select>
+<select id="boardSelectAllBees" resultType="feed">
+select 
+board_no as boardNo,
+bees_no as beesNo,
+board_date as boardDate,
+board_cont as boardCont,
+vote_no as voteNo,
+schedule_no as scheduleNo,
+file_no as fileNo,
+img_no as imgNo,
+board_del_date as boardDelDate,
+board_del_yn as boardDelYN,
+user_name as userName,
+profile_img as profileImg,
+member_no as memberNo,
+NVL(like_count,0) as likeCount,
+NVL(comment_count,0) as commentCount,
+bees_name as beesName
+from bees_feed 
+where bees_no in
+<foreach collection="list" item="item" open="(" close=")" separator=",">
+#{item}
+</foreach>
+and board_del_yn = 'N'
+order by board_date desc
+</select>
+<select id="boardSelectLiked" resultType="feed">
+select 
+f.board_no as boardNo,
+f.bees_no as beesNo,
+f.board_date as boardDate,
+f.board_cont as boardCont,
+f.vote_no as voteNo,
+f.schedule_no as scheduleNo,
+f.file_no as fileNo,
+f.img_no as imgNo,
+f.board_del_date as boardDelDate,
+f.board_del_yn as boardDelYN,
+f.user_name as userName,
+f.profile_img as profileImg,
+f.member_no as memberNo,
+NVL(f.like_count,0) as likeCount,
+NVL(f.comment_count,0) as commentCount,
+f.bees_name as beesName
+from bees_feed f join board_like l on (f.board_no=l.board_no) where l.member_no = #{memberNo}
+and f.board_del_yn = 'N'
+order by f.board_date desc
+</select>
+<select id="feedSelectOne" resultType="modifyfeed">
+select 
+board_no as boardNo,
+bees_no as beesNo,
+board_date as boardDate,
+board_cont as boardCont,
+vote_no as voteNo,
+schedule_no as scheduleNo,
+file_no as fileNo,
+img_no as imgNo,
+board_del_yn as boardDelYN
+from bees_feed 
+where board_no=#{boardNo}
+</select>
+<insert id="insertBoardLike" parameterType="boardLike">
+insert into board_like values(#{memberNo}, #{boardNo})
+</insert>
+<delete id="deleteBoardLike" parameterType="boardLike">
+delete from board_like where member_no=#{memberNo} and board_no=#{boardNo}
+</delete>
+<select id="selectAllLike" resultType="boardLike">
+select 
+member_no as memberNo,
+board_no as boardNo
+from board_like
+where member_no = #{memberNo}
+</select>
+<select id="boardSelectOne" resultType="board">
+select
+board_no as boardNo,
+member_no as memberNo,
+bees_no as beesNo,
+board_date as boardDate,
+board_cont as boardCont,
+vote_no as voteNo,
+schedule_no as scheduleNo,
+file_no as fileNo,
+img_no as imgNo,
+board_del_date as boardDelDate,
+board_notice_yn as boardNoticeYN,
+board_del_yn as boardDelYN
+from board
+where board_no=#{boardNo}
+and board_del_yn = 'N'
+order by board_date desc
+</select>
+<update id="boardDelete">
+update board set board_del_yn='Y', board_del_date = sysdate where board_no = #{boardNo}
+</update>
+<delete id="deleteLikeAll">
+delete from board_like where board_no=#{boardNo}
+</delete>
+<update id="updateBoard" parameterType="board">
+update board set board_cont=#{boardCont}, file_no=#{fileNo}, img_no=#{imgNo}, vote_no=#{voteNo}, schedule_no=#{scheduleNo} where board_no = #{boardNo}
+</update>
+<insert id="insertBoard" parameterType="board">
+<selectKey keyProperty="boardNo" order="BEFORE" resultType="board">
+select board_no_seq.nextval boardNo from dual
+</selectKey>
+insert into board values ( #{boardNo}, #{memberNo}, #{beesNo}, default, #{boardCont}, 0, 0, 0, '0', default, 'N', 'N')
+</insert>
+<insert id="insertBoardWithVote" parameterType="board">
+<selectKey keyProperty="boardNo,voteNo" order="BEFORE" resultType="board">
+select board_no_seq.nextval boardNo, vote_seq.nextval voteNo from dual
+</selectKey>
+insert into board values ( #{boardNo}, #{memberNo}, #{beesNo}, default, #{boardCont}, #{voteNo}, 0, 0, '0', default, 'N', 'N')
+</insert>
+<insert id="insertBoardWithSchedule" parameterType="board">
+<selectKey keyProperty="boardNo,scheduleNo" order="BEFORE" resultType="board">
+select board_no_seq.nextval boardNo, schedule_seq.nextval scheduleNo from dual
+</selectKey>
+insert into board values ( #{boardNo}, #{memberNo}, #{beesNo}, default, #{boardCont}, 0, #{scheduleNo}, 0, '0', default, 'N', 'N')
+</insert>
+<insert id="insertBoardWithFile" parameterType="board">
+<selectKey keyProperty="boardNo,fileNo" order="BEFORE" resultType="board">
+select board_no_seq.nextval boardNo, file_seq.nextval fileNo from dual
+</selectKey>
+insert into board values ( #{boardNo}, #{memberNo}, #{beesNo}, default, #{boardCont}, 0, 0, #{fileNo}, '0', default, 'N', 'N')
+</insert>
+<insert id="insertBoardWithImage" parameterType="board">
+<selectKey keyProperty="boardNo" order="BEFORE" resultType="board">
+select board_no_seq.nextval boardNo from dual
+</selectKey>
+insert into board values ( #{boardNo}, #{memberNo}, #{beesNo}, default, #{boardCont}, 0, 0, 0, #{imgNo}, default, 'N', 'N')
+</insert>
+<select id="boardSearchWithName" parameterType="feed" resultType="feed">
+select 
+board_no as boardNo,
+bees_no as beesNo,
+board_date as boardDate,
+board_cont as boardCont,
+vote_no as voteNo,
+schedule_no as scheduleNo,
+file_no as fileNo,
+img_no as imgNo,
+board_del_date as boardDelDate,
+board_del_yn as boardDelYN,
+user_name as userName,
+profile_img as profileImg,
+member_no as memberNo,
+NVL(like_count,0) as likeCount,
+NVL(comment_count,0) as commentCount,
+bees_name as beesName
+from bees_feed 
+where bees_no=#{beesNo}
+and board_del_yn = 'N'
+and user_name like (#{userName})
+order by board_date desc
+</select>
+<select id="boardSearchWithCont" parameterType="feed" resultType="feed">
+select 
+board_no as boardNo,
+bees_no as beesNo,
+board_date as boardDate,
+board_cont as boardCont,
+vote_no as voteNo,
+schedule_no as scheduleNo,
+file_no as fileNo,
+img_no as imgNo,
+board_del_date as boardDelDate,
+board_del_yn as boardDelYN,
+user_name as userName,
+profile_img as profileImg,
+member_no as memberNo,
+NVL(like_count,0) as likeCount,
+NVL(comment_count,0) as commentCount,
+bees_name as beesName
+from bees_feed 
+where bees_no=#{beesNo}
+and board_del_yn = 'N'
+and board_cont like (#{boardCont})
+order by board_date desc
+</select>
+<select id="selectAllBestFeed" resultType="feed">
+select 
+board_no as boardNo,
+bees_no as beesNo,
+board_date as boardDate,
+board_cont as boardCont,
+vote_no as voteNo,
+schedule_no as scheduleNo,
+file_no as fileNo,
+img_no as imgNo,
+board_del_date as boardDelDate,
+board_del_yn as boardDelYN,
+user_name as userName,
+profile_img as profileImg,
+member_no as memberNo,
+NVL(like_count,0) as likeCount,
+NVL(comment_count,0) as commentCount,
+bees_name as beesName
+from (select row_number() over (order by like_Count desc) as row_num, bees_feed.* from bees_feed where like_count is not null and board_del_yn = 'N') 
+where row_num between 1 and 10
+</select>
+<select id="selectSerachAllFeed" resultType="feed">
+select 
+board_no as boardNo,
+bees_no as beesNo,
+board_date as boardDate,
+board_cont as boardCont,
+vote_no as voteNo,
+schedule_no as scheduleNo,
+file_no as fileNo,
+img_no as imgNo,
+board_del_date as boardDelDate,
+board_del_yn as boardDelYN,
+user_name as userName,
+profile_img as profileImg,
+member_no as memberNo,
+NVL(like_count,0) as likeCount,
+NVL(comment_count,0) as commentCount,
+bees_name as beesName
+from bees_feed
+where 
+board_del_yn = 'N' and
+(board_cont like (#{keyword}) or
+bees_name like (#{keyword}) or
+user_name like (#{keyword}) )
+order by board_date desc
+</select>
+</mapper>

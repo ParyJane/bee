@@ -1,0 +1,90 @@
+body{
+			font-family: 'Noto Sans KR', sans-serif;
+			background-color: #f9f9f9;
+		}
+		
+		.container{
+			width: 100%;
+			height: 100%;
+		}
+		
+		/* 내 정보 네비바 */
+		.mypage_navi_div{
+			padding: 0;
+		}
+		
+		#mypage_navi_ul{
+			width: 75%;
+			height: 300px;
+			list-style-type: none;
+			margin: 20px auto;
+			padding: 0px;
+		}
+		
+		#mypage_navi_ul a{
+ 			text-decoration: none;
+			color : #50401B;
+			display: block; /*a태그를 li영역 전체로 잡기 위함*/
+			position: relative;
+		}
+		
+		#mypage_navi_ul li{
+		 	border: 1px solid #ededed;
+		 	padding: 10px;
+		 	background-color: white;
+		}
+		
+		#mypage_navi_ul li i{
+			color : #50401B;
+			position: absolute;
+			left: 95%;
+			top: 20%;
+		}
+		
+		
+		/* 내가 쓴 글 피드 */
+		.myhistroy_div{
+			width: 100%;
+			height: auto;
+			margin: 20px auto;
+		}
+		
+		.myhistroy_table {
+			width: 100%;
+			color : #50401B;
+			border: 1px solid #ededed;
+			background-color: white;
+		}
+		
+		.myhistroy_board_table {
+			margin: 10px auto;
+		}
+		
+		.myhistroy_table tr th{
+			padding: 10px 20px;
+			background-color: #dedede;
+		}
+		
+		.myhistroy_beesName a{
+			text-decoration: none;
+			color : #50401B;
+			display: block; /*a태그를 영역 전체로 잡기 위함*/
+		}
+		
+		.myhistroy_beesName{
+			border: 1px solid #ededed;
+		}
+		
+		.myhistroy_beesName td{
+			padding: 5px 20px;
+		}
+		
+		.myhistroy_heart_table{
+			width: 100%;
+			color : #50401B;
+			border: 1px solid #ededed;
+			background-color: white;
+			margin: 10px auto;
+		}
+		
+		

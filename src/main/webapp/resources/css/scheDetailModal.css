@@ -1,0 +1,109 @@
+.sche-modal-bg {
+	display: none;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	scroll-behavior: auto;
+	background-color: rgba(0, 0, 0, 0.2);
+	top: 0;
+	left: 0;
+	z-index: 2;
+}
+
+#sche-detail-modal {
+	display: none;
+	position: absolute;
+	background-color: white;
+	width: 500px;
+	height: 350px;
+	box-shadow: 1px 1px 2px rgb(230, 230, 230);
+	border-radius: 25px;
+	z-index: 50;
+	margin: auto;
+	top: 15%;
+}
+
+#sche-detail-modal-header {
+	width: 100%;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+}
+
+#sche-detail-modal-close {
+	height: 50px;
+	float: right;
+	margin-right: 15px;
+	background-color: transparent;
+	border: 0px solid white;
+	line-height: 10px;
+}
+
+#sche-detail-modal-cont {
+	width: 90%;
+	height: 230px;
+	margin: auto;
+	text-align: left;
+	color: #6d6042;
+}
+
+#sche-detail-modal-footer {
+	width: 90%;
+	height: 70px;
+	text-align: center;
+}
+
+#sche-detail-modal-button {
+	padding: 5px 40px 5px 40px;
+	margin-top: 20px;
+	border-radius: 999px;
+	border: 0px solid white;
+	background-color: #6d6042;
+	color: white;
+	font-size: 0.9rem;
+	font-weight: 300;
+	margin-left: 20px;
+}
+
+#sche-detail-writer-info a {
+	font-size: 0.8rem;
+	text-decoration: none;
+	color: #6d6042;
+}
+
+#sche-detail-title {
+	padding-left: 16px;
+	font-size: 1.2rem;
+	font-weight: 200;
+}
+
+#sche-detail-date {
+	padding-left: 16px;
+	font-size: 0.8rem;
+	font-weight: 500;
+}
+
+#sche-detail-writer-info {
+	padding: 10px 0px 0px 10px;
+}
+
+#sche-detail-writer-profile {
+	width: 30px;
+	height: 30px;
+	background-color: #ffd6e1;
+	border-radius: 999px;
+	float: left;
+}
+
+#sche-detail-writer-info>span {
+	margin-left: 5px;
+	line-height: 30px;
+	margin-right: 20px;
+}
+
+#sche-detail-note {
+	margin-top: 20px;
+	border-top: 1px solid lightgray;
+	font-size: 1rem;
+	padding: 20px;
+}

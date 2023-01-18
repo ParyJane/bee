@@ -1,0 +1,328 @@
+body{
+			font-family: 'Noto Sans KR', sans-serif;
+			background-color: #f9f9f9;
+		}
+		
+		.container{
+			width: 100%;
+			height: 100%;
+		}
+		
+		/* 내 정보 네비바 */
+		.mypage_navi_div{
+			padding: 0;
+		}
+		
+		#mypage_navi_ul{
+			width: 75%;
+			height: 300px;
+			list-style-type: none;
+			margin: 20px auto;
+			padding: 0px;
+		}
+		
+		#mypage_navi_ul a{
+ 			text-decoration: none;
+			color : #50401B;
+			display: block; /*a태그를 li영역 전체로 잡기 위함*/
+			position: relative;
+		}
+		
+		#mypage_navi_ul li{
+		 	border: 1px solid #ededed;
+		 	padding: 10px;
+		 	background-color: white;
+		}
+		
+		#mypage_navi_ul li i{
+			color : #50401B;
+			position: absolute;
+			left: 95%;
+			top: 20%;
+		}
+		
+		/* 테이블 메뉴 */
+		.myhistroy_div{
+			width: 100%;
+			margin: 20px auto;
+		}
+		
+		.myhistroy_table tr th{
+			padding: 10px 20px;
+			background-color: #dedede;
+			position: relative;
+		}
+		
+		.myhistroy_categories td{
+			width: 50%;
+			padding: 10px 0px;
+			text-align: center;
+			position: relative;
+		}
+		
+		.myhistroy_categories td a{
+			text-decoration: none;
+			color : #50401B;
+			display: block; /*a태그를 영역 전체로 잡기 위함*/
+		}
+		
+		.myhistroy_categories_underbar td:nth-child(1){
+		 	background-color: #50401B;
+		 	height: 2px;
+		}
+
+		.myhistroy_table{
+			width: 100%;
+			color : #50401B;
+			border: 1px solid #ededed;
+			background-color: white;
+		}
+		
+		
+		/* 나의 문의 내역 */
+		.myhistroy_qnas_div{
+			width: 100%;
+			color : #50401B;
+			background-color: white;
+			padding: 30px 20px;
+		}
+		
+		.myhistroy_qnas_div hr{
+			margin: 70px 0 0 0;
+		}
+		
+		.myhistroy_qnas_div table{
+			width: 100%;
+		}
+		
+		.myhistroy_qnas_answer_div{
+			border: 1px solid #ededed;
+			margin: 5px auto;
+		}
+		
+		.qnas_profile{
+			border-radius: 70%;
+			background-color: #F7D078;
+			width: 50px;
+			height: 50px;
+			background-size: cover;
+			border: 3px solid #F7D078;
+		}
+		
+		.admin_profile{
+			border-radius: 70%;
+			background-color: white;
+			border: 3px solid #F7D078;
+			width: 50px;
+			height: 50px;
+		}
+		
+		.myhistroy_q_table tr td, .myhistroy_a_table tr td {
+		}
+		
+		.myhistroy_qnas_answer_div{
+			border-radius: 30px 30px 30px 0px;
+			width: 100%;
+			height: auto;
+			background-color: #FFF3D8;
+			padding: 20px;
+			margin-top: 20px;
+			border: 0;
+			/* box-shadow : 1px 1px 1px 1px #ededed; */
+		}
+		
+		.qnas_writer_name{
+			font-size: 0.9rem;
+			font-weight: 500;
+		}
+		
+		.admin_name{
+			font-weight: 500;
+			padding: 0;
+			padding-left: 5px;
+			font-size: 1.1rem;
+		}
+		
+		.qnas_q_timestamp{
+			font-size: 0.7rem;
+			color : gray;
+			padding: 0;
+			
+		}
+		
+		.qnas_a_timestamp{
+			font-size: 0.8rem;
+			color : gray;
+			padding-left: 5px;
+			transform: translate(0, -3px);
+		}
+		
+		.qnas_title{
+			padding: 25px 20px 0 20px;
+			font-weight: 500;
+			font-size: 1.1rem;
+		}
+		
+		.qnas_q{
+			padding: 10px 20px 25px 20px;
+		}
+		
+		.qnas_a{
+			padding: 20px 55px;
+		}
+		
+		.myhistroy_qnas_div:last-child{
+			margin-bottom: 150px;
+		}
+		
+		.qna_modify_btn {
+			text-align: center;
+			cursor: pointer;
+		}
+		
+		.qna_modify_hidden_navi{
+			font-size: 0.9rem;
+			font-weight: 200;
+			padding-left: 85%;
+			position: relative;
+			visibility: hidden;
+		}
+		
+		.qna_navi_block {
+			display: inline-block;
+			width: 70px;
+			height: 62px;
+			background-color: white;
+			border: 1px solid lightgray;
+			text-align: center;
+			right: 50px;
+			position: absolute;
+		}
+
+		.qna_modify {
+			width: 100%;
+			height: 30px;
+			line-height: 30px;
+			cursor: pointer;
+			font-weight: 300;
+		}
+
+		.qna_delete {
+			width: 100%;
+			height: 30px;
+			line-height: 30px;
+			cursor: pointer;
+			font-weight: 300;
+		}
+
+	
+		/* 모달 배경 --------------------------------*/
+		.modal_bg {
+	   	  display: none;
+          position:fixed;
+          top:0;
+          left:0;
+          width:100%;
+          height:100%;
+          background:rgba(0, 0, 0, 0.3);
+          z-index: 30;
+        }   
+        
+        
+       /* 모달 클릭 아웃라인 X --------------------------------*/
+	   #question_modal_text,	   
+	   #question_modal_close, 
+	   #question_modal_reset, 
+	   #question_modal_submit:focus{
+	   		outline: none;
+	   }
+	
+	   /* 1:1 문의 글 쓰기 모달 --------------------------------*/
+       #question_modal{
+            display: none;
+            position:absolute; 
+            background-color: white; 
+            width:700px;
+            height:430px; 
+            box-shadow: 1px 1px 2px rgb(230, 230, 230); 
+            border-radius: 25px; 
+            z-index: 99;
+            left: 30%;
+   			transform: translateX(-30%);
+   			top: 30%;
+   	        transform: translateY(-30%);
+        }
+        
+        #question_modal_header{
+            width:100%; 
+            height:50px;
+            text-align: center; 
+            line-height:50px;
+        }
+
+        #question_modal_close{
+            height: 50px; 
+            float:right; 
+            margin-right:15px; 
+            background-color: transparent; 
+            border:0px solid white; 
+            line-height:10px;
+        }
+        
+        #question_modal_cont{
+            width:90%; 
+            height:330px; 
+            border-top: 1px solid lightgray;  
+            margin: auto;
+        }
+        
+        #question_modal_title{
+        	padding: 10px 20px;
+        	text-align: left;
+        	border-bottom: 0.5px solid lightgray;
+        	color: #50401B;
+        }
+		
+        #question_modal_text {
+			width: 100%;
+			height: 250px;
+			overflow: auto;
+			padding: 15px 15px;
+			color: #50401B;
+			font-size: 0.9rem;
+			margin-top: 10px;
+			border: 1px solid lightgray;
+			text-align: left;
+			resize: none;
+		}
+        
+        #question_modal_footer{
+            width:100%; 
+            height:70px; 
+            text-align: center;
+        }
+        
+         #question_modal_reset{
+            margin-right: 10px; 
+            width: 100px;
+            height: 35px;
+            border-radius: 25px;
+            border:1px solid #6D6042; 
+            background-color: white;
+            color: #6D6042;
+            font-size: 0.9rem; 
+            font-weight: 500;
+        }
+        
+        #question_modal_submit{
+            margin: 20px auto; 
+            width: 100px;
+            height: 35px;
+            border-radius: 25px;
+            border:0px solid white; 
+            background-color:#6D6042;
+            color:white; 
+            font-size: 0.9rem; 
+            font-weight: 500;
+        }
+		

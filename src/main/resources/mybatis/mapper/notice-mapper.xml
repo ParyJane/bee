@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="notice">
+
+	<insert id="noticeInsert" parameterType="Notice">
+		INSERT INTO NOTICE VALUES
+		(
+			notice_no_seq.nextval,
+			#{memberNo},
+			#{noticeCategory},
+			#{noticeTitle},
+			#{noticeCont},
+			DEFAULT,
+			'N'
+		)
+	</insert>
+	
+
+	
+	<select id="noticeSelectAll" parameterType="Criteria" resultType="Notice">
+		SELECT ROWNUM, tbl.* 
+		FROM        
+		(SELECT 
+            ROW_NUMBER() OVER(ORDER BY notice_category, notice_no desc) AS num,
+   			notice_no as noticeNo, 
+   			member_No as memberNo,
+    		notice_category as noticeCategory, 
+    		notice_title as noticeTitle,
+    		notice_cont as noticeCont,
+    		notice_date as noticeDate,
+    		notice_del_yn as noticeDelYN,
+            member_id as memberId
+		from notice 
+		LEFT JOIN 
+    		member 
+		USING(member_No))tbl
+        WHERE num BETWEEN (#{pageNum}-1) * #{amount} AND #{pageNum} * #{amount}
+		
+	</select>
+	
+	
+	<update id="modifyUpdate" parameterType="Notice">
+		update 
+			notice 
+		set 
+			notice_title=#{noticeTitle},
+			notice_category=#{noticeCategory},
+			notice_cont=#{noticeCont}
+		where (
+			notice_no=#{noticeNo} 
+		and 
+			notice_del_yn= #{noticeDelYN}
+			)
+	
+	
+	</update>
+	
+	<update id="noticeBtnUpdate">
+		UPDATE notice
+		Set
+		notice_del_yn =#{noticeDelYN}
+		WHERE notice_no=#{noticeNo}
+	
+	
+	</update>
+	<select id="selectMemberAllList" parameterType="Criteria" resultType="Member">
+	
+		SELECT ROWNUM, tbl.* 
+			FROM        
+			(SELECT 
+		            ROW_NUMBER() OVER(ORDER BY member_date desc) AS num,
+		   			member_no as memberNo,
+		       		member_id as memberId,
+		       		member_name as memberName, 
+		       		member_email as memberEmail, 
+		       		member_date as memberDate, 
+		       		member_end_date as memberEndDate, 
+		       		member_del_yn as delYN
+			from member
+		<![CDATA[	where member_no >=1000)tbl  ]]>
+       		 WHERE num BETWEEN (#{pageNum}-1) * #{amount} AND #{pageNum} * #{amount}
+	
+	 
+	</select>
+	
+	
+	
+	<update id="updateMemberDelYN" parameterType="Member">
+ 		
+		
+				merge into 
+					member m 
+				using 
+					(SELECT DISTINCT m.member_no, m.member_del_yn, m.member_end_date, b.user_class  
+					FROM member m
+					left join bees_user b
+					on(m.member_no = b.member_no)
+					<![CDATA[WHERE m.member_no >= 1000 and (b.user_class is null or b.user_class !='host')]]>
+					and m.member_no=#{memberNo})n
+					on(m.member_no = n.member_no)
+					when matched then
+					update set 
+					<if test=" 'Y'.equals(delYN)">
+					 m.member_end_date=systimestamp,
+					</if>
+					<if test=" 'N'.equals(delYN)">
+					m.member_end_date=null,
+					</if>                                       
+					m.member_del_yn=#{delYN}
+		 
+		 
+		
+ 		 	
+	</update>
+	
+	<select id="noticeSelectOne" parameterType="int" resultType="Notice">
+		select 
+			notice_category as noticeCategory, 
+			notice_title as noticeTitle, 
+			notice_cont as noticeCont,
+			member_no as memberNo
+		from notice
+		WHERE notice_no = #{num}
+	
+	
+	</select>
+	
+	<insert id="insertOnlyImage" parameterType="java.util.Map">
+			INSERT INTO IMAGE(
+			img_no
+			, original_img_name
+			, change_img_name
+			, img_path
+			, img_size
+			, img_del_yn
+			, member_no
+			)
+			select img_seq.nextval as img_no
+			, A.*  
+			from(
+			<foreach item="item" collection="list" index="index" separator=" UNION ALL ">	
+				select #{item.fileName} as original_img_name
+				, #{item.changeFileName} as change_img_name
+				, #{item.uploadPath} as img_path
+				, #{item.imgSIze} as img_size
+				, #{item.imgDelYN} as img_del_yn
+				, #{item.memberNo} as member_no 
+				from dual
+			</foreach>
+			) A
+	</insert>
+	
+	
+	<update id="updateDeleteImage" parameterType="AttachFileDTO">
+		UPDATE IMAGE
+		SET
+			img_del_yn = #{imgDelYN}
+		WHERE 
+			member_no = #{memberNo} 
+		AND change_img_name = #{changeFileName}
+	
+	
+	
+	</update>
+	
+	<select id="totalCount" resultType="int">
+		select count(*) from member where member_no >=1000
+	
+	</select>
+	
+	<select id="totalNotice" resultType="int">
+		select count(*) from notice
+	
+	</select>
+	
+	<select id="selectAllImage" parameterType="BeesUser" resultType="AttachFileDTO">
+		SELECT 
+			img_no as imgNo, 
+			bees_no as beesNo, 
+			original_img_name as fileName, 
+			change_img_name as changeFileName, 
+			img_path as uploadPath, 
+			img_size as imgSIze, 
+			img_del_yn as imgDelYN, 
+			member_no as memberNo
+			
+		FROM image 
+		LEFT JOIN member	
+		USING(member_no)	
+		LEFT JOIN bees_user
+		USING(member_no)
+		WHERE 
+			member_no = #{memberNo}
+		AND
+			bees_no = #{beesNo}
+	
+	</select>
+	
+        
+       
+	
+	<select id="searchBtn" parameterType="Criteria" resultType="Notice">
+		SELECT ROWNUM, tbl.* 
+		FROM        
+			(SELECT 
+            ROW_NUMBER() OVER(ORDER BY notice_category, notice_no desc) AS num,
+   			notice_no as noticeNo, 
+    		member_No as memberNo,
+    		notice_category as noticeCategory, 
+    		notice_title as noticeTitle,
+    		notice_cont as noticeCont,
+    		notice_date as noticeDate,
+    		notice_del_yn as noticeDelYN,
+             member_id as memberId
+		from notice 
+		LEFT JOIN 
+    		member 
+		USING(member_No)
+       
+        <trim prefix="where"  prefixOverrides="AND|OR">
+				<if test="startDate != null">
+					(to_char(notice_date, 'YYYY-MM-DD') between #{startDate} and #{endDate})
+				</if>
+				<if test="category != null">
+						<choose>
+							<when test="category =='F'.toString()">
+								 and notice_category = 'FAQ'
+							</when>
+							<when test="category =='N'.toString()">
+								 and notice_category = '공지사항'
+							</when>
+						</choose>		
+				</if>
+				<if test="keyword != null">
+					and (notice_title like '%'||#{keyword}||'%'
+						or notice_cont like '%'||#{keyword}||'%')
+					
+				</if>
+		</trim>
+        )tbl
+         WHERE num BETWEEN (#{pageNum}-1) * #{amount} AND #{pageNum} * #{amount}
+	
+	
+	</select>
+
+	<select id="searchbar" parameterType="Criteria" resultType="Member">
+		SELECT ROWNUM, tbl.* 
+			FROM        
+			(SELECT 
+		            ROW_NUMBER() OVER(ORDER BY member_date desc) AS num,
+		   			member_no as memberNo,
+		       		member_id as memberId,
+		       		member_name as memberName, 
+		       		member_email as memberEmail, 
+		       		member_date as memberDate, 
+		       		member_end_date as memberEndDate, 
+		       		member_del_yn as delYN
+			from member
+		<![CDATA[	where (member_no >=1000) ]]>
+			<if test="startDate != null">
+					and (to_char(member_date, 'YYYY-MM-DD') between #{startDate} and #{endDate})
+				</if>
+				<if test="category != null">
+						<choose>
+							<when test="category =='I'.toString()">
+								 and (member_id like '%'||#{keyword}||'%')
+							</when>
+							<when test="category =='N'.toString()">
+								 and (member_name like '%'||#{keyword}||'%')
+							</when>
+							<when test="category =='W'.toString()">
+								 and ((member_del_yn = 'Y')
+								 and (member_name like '%'||#{keyword}||'%'))
+							</when>
+							<when test="category =='J'.toString()">
+								 and ((member_del_yn = 'N')
+								 and (member_name like '%'||#{keyword}||'%'))
+							</when>
+						</choose>		
+				</if>
+				
+		)tbl 
+		 WHERE num BETWEEN (#{pageNum}-1) * #{amount} AND #{pageNum} * #{amount}
+	</select>
+	
+		<select id= "minisearch" >
+			  select 
+			  original_file_name, 
+			  member_name 
+			  from bees_file 
+			  left join 
+			  board 
+			  using(board_no)
+			  left join 
+			  member 
+			  using(member_no) 
+			  where file_del_yn = 'N'
+		
+		</select>
+	<!-- 정평주 -->
+	<select id="myNoticeList" resultType="notice">
+  		select 
+  			notice_no as noticeNo,
+  			member_no as memberNo,
+			notice_category as noticeCategory,
+			notice_title as  noticeTitle,
+			notice_cont as noticeCont,
+			notice_date as noticeDate,
+			notice_del_yn as noticeDelYN
+  		from notice where notice_del_yn='N' order by notice_date desc
+  	</select>
+  	
+  <select id="selectListMini" parameterType="Search" resultType="Search">
+  select member_name, 
+  original_file_name 
+  from ( 
+  select
+   * from bees_file
+    left join 
+    board using 
+    (board_no)
+     where bees_no =#{beesNo}
+     )left join
+      member 
+      using(member_no)
+     where member_name  
+     like '%'||#{keyword}||'%'
+  
+  </select>	
+</mapper>

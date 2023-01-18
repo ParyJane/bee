@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="setting">
+<select id="beesSetting" resultType="setting">
+select
+set_no as setNo,
+bees_no as beesNo,
+set_notice as setNotice,
+set_write as setWrite,
+set_comment as setComment,
+set_cont_del as setContDel,
+set_sche_regist as setScheRegist,
+set_sche_modify as setScheModify,
+set_chat_open as setChatOpen,
+set_user_invite as setUserInvite,
+set_user_permit as setUserPermit,
+set_user_condi as setUserCondi,
+set_user_block as setUserBlock
+from setting
+where bees_no = #{beesNo}
+</select>
+</mapper>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="question">
+	
+	
+	 <!-- 사용자 /////////////////////////////////////////////////////// -->
+	 <!-- 1:1문의 등록 -->
+	 <insert id="insertQuestion" parameterType="question" >
+	 	insert into question values
+			(QUESTION_NO_SEQ.nextval, 
+			#{memberNo}, 
+			#{questionCategory}, 
+			#{questionTitle}, 
+			#{questionCont}, 
+			sysdate, 'N', 'N')
+	 </insert>
+	 
+	 
+	  <!-- 1:1문의 리스트 -->
+	 <select id="myQnaHistory" resultType="qna" >
+	 	select question_no as questionNo, 
+	 		   member_no as memberNo, 
+	 		   question_category as questionCategory, 
+	 		   question_title as questionTitle,
+			   question_cont as questionCont, 
+			   question_date as questionDate, 
+			   reply_yn as replyYN, 
+			   question_del_yn as questionDelYN, 
+			   nvl(answer_no,0) as answerNo, 
+			   nvl(admin_no,0) as adminNo, 
+			   answer_cont as answerCont, 
+			   answer_date as answerDate, 
+			   answer_del_yn as answerDelYN
+		from (select QUESTION.QUESTION_NO, QUESTION.Member_NO,
+					question_category, question_title, question_cont, 
+					question_date, reply_yn, question_del_yn, 
+					answer_no, admin_no, answer_cont, answer_date, 
+					nvl(answer_del_yn, 'N') as answer_del_yn 
+				from question left join answer
+				on(QUESTION.question_no = answer.question_no) 
+		where QUESTION.member_no= #{memberNo}
+		and QUESTION_DEL_YN='N')
+		order by question_date desc
+	 </select>
+	 
+	 
+	 <!-- 1:1문의 1개(모달) -->
+	 <select id="selectOneQuestion" resultType="question">
+	 	select 
+	 		 question_no as questionNo, 
+	 		 member_no as memberNo, 
+	 		 question_category as questionCategory, 
+	 		 question_title as questionTitle,
+			 question_cont as questionCont, 
+			 question_date as questionDate, 
+			 reply_yn as replyYN, 
+			 question_del_yn as questionDelYN
+	 	 from question 
+	 	 where question_no = #{questionNo}
+	 </select>
+	 
+	 <!-- 문의 수정 -->
+	 <update id="questionModify" parameterType="question">
+	 	update question set 
+	 			question_cont = #{questionCont},
+	 			question_date = systimestamp
+	 	where question_no = #{questionNo}
+	 </update>
+	 
+	 <!-- 문의 삭제 -->
+	 <update id="questionDelete">
+	 	update question set 
+	 			question_del_yn = 'Y'
+	 	where question_no = #{questionNo}
+	 </update>
+	 
+	 <!-- 문의 복구 -->
+	 <update id="questionRollback">
+	 	update question set 
+	 			question_del_yn = 'N'
+	 	where question_no = #{questionNo}
+	 </update>
+	 
+	 <!-- 관리자 /////////////////////////////////////////////////////// -->
+	 <!-- 1:1문의 리스트(관리자) -->
+	 <select id="adminQuestionList" parameterType="pagingVo" resultType="qna" >
+	 select * from
+  		(select rownum num, A.* from
+  			 (select question_no as questionNo, 
+	 				   member_no as memberNo, 
+			 		   question_category as questionCategory, 
+	 				   question_title as questionTitle,
+			   		   question_cont as questionCont, 
+			  		   question_date as questionDate, 
+					   reply_yn as replyYN, 
+					   question_del_yn as questionDelYN, 
+					   nvl(answer_no,0) as answerNo, 
+					   nvl(admin_no,0) as adminNo, 
+					   answer_cont as answerCont, 
+					   answer_date as answerDate, 
+					   answer_del_yn as answerDelYN
+				from (select QUESTION.QUESTION_NO, QUESTION.Member_NO,
+					question_category, question_title, question_cont, 
+					question_date, reply_yn, question_del_yn, 
+					answer_no, admin_no, answer_cont, answer_date, 
+					nvl(answer_del_yn, 'N') as answer_del_yn 
+						from question left join answer
+						on(QUESTION.question_no = answer.question_no))
+				order by question_del_yn, question_no desc) A) 
+		where num between #{start} and #{end}
+	 </select>
+	 
+	<select id="countQuestion" resultType="pagingVo">
+		select count(*) as totalPage from question
+	</select>
+	
+	<select id="adminQuestionSearch" parameterType="adminQuestionSearch" resultType="qna" >
+  		select question_no as questionNo, 
+			   member_no as memberNo, 
+	 		   question_category as questionCategory, 
+			   question_title as questionTitle,
+	   		   question_cont as questionCont, 
+	  		   question_date as questionDate, 
+			   reply_yn as replyYN, 
+			   question_del_yn as questionDelYN, 
+			   nvl(answer_no,0) as answerNo, 
+			   nvl(admin_no,0) as adminNo, 
+			   answer_cont as answerCont, 
+			   answer_date as answerDate, 
+			   answer_del_yn as answerDelYN
+		from (select QUESTION.QUESTION_NO, QUESTION.Member_NO,
+			question_category, question_title, question_cont, 
+			question_date, reply_yn, question_del_yn, 
+			answer_no, admin_no, answer_cont, answer_date, 
+			nvl(answer_del_yn, 'N') as answer_del_yn 
+				from question left join answer
+				on(QUESTION.question_no = answer.question_no))
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+  		 	<if test = "startDate != null">
+ 		 		#{startDate} <![CDATA[  <= ]]> to_char(question_date,'YYYY-MM-DD')
+ 		 	</if>
+ 		 	<if test = "endDate != null">
+ 				 and to_char(question_date,'YYYY-MM-DD') <![CDATA[  <= ]]> #{endDate}
+ 			</if>
+ 			<if test = "startDate == null and endDate == null">
+ 				and question_no like '%' || #{search} || '%' 
+ 				 or question_category like '%' || #{search} || '%'
+ 				 or question_title like '%' || #{search} || '%' 
+ 				 or question_cont like '%' || #{search} || '%'
+ 			</if>
+ 			<if test="searchSelect == 1">
+ 				 and question_no like '%' || #{search} || '%' 
+ 				 or question_category like '%' || #{search} || '%'
+ 				 or question_title like '%' || #{search} || '%' 
+ 				 or question_cont like '%' || #{search} || '%'
+ 			</if>
+ 			<if test="searchSelect == 2">
+ 				 and question_no like '%' || #{search} || '%'
+ 			</if>
+ 			<if test="searchSelect == 3">
+ 				 and question_category like '%' || #{search} || '%'
+ 			</if>
+ 			<if test="searchSelect == 4">
+ 				 and question_title like '%' || #{search} || '%'
+ 			</if>
+ 			<if test="searchSelect == 5">
+ 				 and question_title like '%' || #{search} || '%' 
+ 				 or question_cont like '%' || #{search} || '%'
+ 			</if>
+ 			order by question_del_yn, question_no desc
+  	     </trim>
+	 </select>
+
+</mapper>

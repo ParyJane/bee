@@ -1,0 +1,148 @@
+* { 
+	color: #50401B; 
+	text-decoration: none; 
+	list-style: none; 
+	box-sizing: border-box; 
+	} 
+	.head{
+	font-size:1.3rem;
+	height:15%;
+	line-height:54px;
+	padding-left:15px;
+	}
+
+	.main_head{ 
+	width:80%;
+	position: absolute;
+	font-size: 0; 
+	z-index: 2; 
+	cursor: pointer; 
+	height:15%;
+	margin-left:15px;
+	margin-right:15px;
+	} 
+	*.file_on{ 
+
+	display: inline-block; 
+	width: 50%;
+	height: 30px; 
+	line-height: 30px; 
+	text-align: center; 
+	font-size: 1rem; 
+
+	z-index: 3; 
+	
+	} 
+	.main_bodys{ 
+	position: absolute; 
+	margin-top:91px;
+	margin-left:15px;
+	margin-right:15px;
+	height: 70%; 
+	width:80%;
+
+
+	z-index: 1; 
+	}
+	*.file_off{ 
+	display: inline-block; 
+	width: 50%; height: 30px; 
+	line-height: 30px; 
+	text-align: center; 
+	font-size: 1rem; 
+	
+	
+	 z-index: 3; 
+	
+	 
+	 } 
+	*.vote_off{ 
+	display: inline-block; 
+	width: 50%;
+	height: 30px; 
+	line-height: 30px; 
+	text-align: center; 
+	font-size: 1rem; 
+	
+	
+	} 
+	*.vote_on{ 
+	display: inline-block; 
+	width: 50%; 
+	height: 30px; 
+	line-height: 30px; 
+	text-align: center; 
+	font-size: 1rem; 
+	
+	
+	 } 
+	 
+	*.file_cont{ 
+	display: block; 
+	position: fixed; 
+	padding: 10px; 
+	width: 355px; 
+
+	} 
+	*.file_cont>li{ 
+	line-height: 27px; 
+	font-size: 0.9rem; 
+	} 
+	*.file_cont>li>a{ 
+	float: left; 
+	color:#50401B;
+	} 
+	*.vote_cont{ 
+	display: none; /*활성시 flex*/ 
+	justify-content: space-between;
+	 padding: 10px; 
+	 width: 355px; 
+	 height: 125px; 
+	 font-size: 0;
+	  } 
+	*.vote_cont>li{ 
+	display: inline-block; 
+	overflow: hidden;
+	 width: 100px; 
+	 height: 100px; 
+	 }
+
+
+	.cont_searchBox{
+position:absolute;
+
+width:87%;
+height:35px;
+padding: 0 13px 0 13px;
+bottom:15px;
+margin-left:40px;
+margin-right:30px;
+border:1px solid gray;
+border-radius:30px;
+
+}
+.cont_searchBox form{
+height:100%;
+}
+#search{
+border:none;
+width:95%;
+height:100%;
+
+padding:3px;
+padding-left:20px;
+}
+#search:focus{
+outline:none;
+}
+#search_btn{
+width:5%;
+height:20px;
+border:none;
+background-color:white;
+}
+.cont{
+width:100%;
+height:100%;
+
+}

@@ -1,0 +1,181 @@
+@CHARSET "UTF-8";
+/* 기본 */
+*, :after, :before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    /* font-family: 'Noto Sans KR', sans-serif; */
+}
+.navi {
+    display: none;
+}
+*:focus{outline : none}
+body {
+    background: #eef0f3;
+    line-height: 1.43;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+body, h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: #222;
+}
+html {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+/* content */
+#container.fullWide #content {
+    width: 100%;
+    margin-left: 0;
+}
+
+#content {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding-bottom: 20px;
+}
+/* main */
+figcaption, figure, main {
+    display: block;
+}
+main {
+    display: block;
+}
+/* bandMakeUsecaseArea */
+.bandMakeUsecaseArea {
+    width: 440px;
+    margin: 0 auto;
+    text-align: center;
+}
+.gMat50 {
+    margin-top: 50px!important;
+}
+/* title */
+.bandMakeUsecaseArea .title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #50401B;
+}
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+/* titleDesc gMat3 */
+.bandMakeUsecaseArea .titleDesc {
+    font-size: 15px;
+    color: #666;
+}
+.gMat3 {
+    margin-top: 3px!important;
+}
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+button, dd, dl, dt, fieldset, ol, p, ul {
+    margin: 0;
+    padding: 0;
+}
+ol, ul {
+    list-style: none;
+}
+button, dd, dl, dt, fieldset, ol, p, ul {
+    margin: 0;
+    padding: 0;
+}
+/* usecaseList */
+.bandMakeUsecaseArea .usecaseList {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: wrap;
+    flex-flow: wrap;
+    margin-top: 4px;
+}
+ol, ul {
+    list-style: none;
+}
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+/* usecaseItem */
+.bandMakeUsecaseArea .usecaseItem {
+    position: relative;
+    width: 130px;
+    min-height: 140px;
+    margin: 15px 8px 0;
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.08), 0 0 1px 0 rgba(0,0,0,.2);
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.08), 0 0 1px 0 rgba(0,0,0,.2);
+    background-color: #fff;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+/* usecaseItemLink _createType */
+.bandMakeUsecaseArea .usecaseItemLink {
+    display: block;
+    height: 100%;
+    padding-bottom: 21px;
+    line-height: 1.29;
+    text-decoration: none;
+}
+a {
+    color: #222;
+    text-decoration: none;
+}
+a {
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
+/* iconUscase */
+.bandMakeUsecaseArea .usecaseItem .iconUscase {
+    display: block;
+}
+.bandMakeUsecaseArea .usecaseItem .iconUscase img {
+    width: 100%;
+}
+img {
+    border-style: none;
+}
+
+.bandMakeUsecaseArea .usecaseItem .uscaseName {
+    display: block;
+    padding: 0 16px;
+}
+em {
+    font-style: normal;
+    color: #50401B;
+    font-weight: 600;
+    text-decoration: none;
+}
+body {
+    background: #eef0f3;
+    line-height: 1.43;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+ol, ul {
+    list-style: none;
+}
+button, dd, dl, dt, fieldset, ol, p, ul {
+    margin: 0;
+    padding: 0;
+}

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="vote">
+<select id="voteSelectAll" resultType="feedVote">
+select
+vote_no as voteNo,
+vote_title as voteTitle,
+vote_item as voteItem,
+vote_public_yn as votePublicYN,
+vote_end_yn as voteEndYN,
+bees_no as beesNo,
+board_no as boardNo,
+vote_cho_no as voteChoNo,
+vote_cho_item as voteChoItem,
+user_name as userName,
+user_no as userNo,
+member_no as memberNo
+from feed_vote
+where bees_no = #{beesNo}
+</select>
+<select id="voteSelectAllMyBees" resultType="feedVote">
+select
+vote_no as voteNo,
+vote_title as voteTitle,
+vote_item as voteItem,
+vote_public_yn as votePublicYN,
+vote_end_yn as voteEndYN,
+bees_no as beesNo,
+board_no as boardNo,
+vote_cho_no as voteChoNo,
+vote_cho_item as voteChoItem,
+user_name as userName,
+user_no as userNo,
+member_no as memberNo
+from feed_vote
+where bees_no in
+<foreach collection="list" item="item" open="(" close=")" separator=",">
+#{item}
+</foreach>
+</select>
+<select id="voteSelectOne" resultType="vote">
+select
+vote_no as voteNo,
+vote_title as voteTitle,
+vote_item as voteItem,
+vote_public_yn as votePublicYN,
+vote_end_yn as voteEndYN,
+bees_no as beesNo,
+board_no as boardNo
+from vote
+where board_no = #{boardNo}
+</select>
+<insert id="voteInsertItem" parameterType="voteChoice">
+insert into vote_choice values(vote_cho_seq.nextval,#{voteChoItem},#{userName},#{voteNo},#{userNo})
+</insert>
+<select id="voteSelectReload" resultType="feedVote">
+select
+vote_no as voteNo,
+vote_title as voteTitle,
+vote_item as voteItem,
+vote_public_yn as votePublicYN,
+vote_end_yn as voteEndYN,
+bees_no as beesNo,
+board_no as boardNo,
+vote_cho_no as voteChoNo,
+vote_cho_item as voteChoItem,
+user_name as userName,
+user_no as userNo
+from feed_vote
+where vote_no = #{voteNo}
+</select>
+<update id="voteEnd">
+update vote set vote_end_yn = 'Y' where vote_no=#{voteNo}
+</update>
+<delete id="deleteVote">
+delete from vote where vote_no = #{voteNo}
+</delete>
+<insert id="insertVote" parameterType="vote">
+insert into vote values (#{voteNo}, #{voteTitle}, #{voteItem}, #{votePublicYN}, default, #{beesNo}, #{boardNo})
+</insert>
+<select id="selectAllVote" parameterType="int" resultType="Vote">
+select
+
+vote_title as voteTitle,
+
+vote_end_yn as voteEndYN
+
+from Vote
+where bees_no = #{beesNo}
+</select>
+
+
+
+<select id="selectAllSearch" parameterType="Search" resultType="Vote">
+
+ select * from vote where bees_no= #{beesNo} and vote_title like '%'||#{keyword}||'%'
+ 
+         select vote_title,vote_end_yn,bees_no,member_no from vote left join bees using(bees_no)left join bees_user using(bees_no)
+        left join member using(member_no) where member_no = #{memberNo} and bees_no=#{beesNo}
+ 
+</select>
+
+
+
+</mapper>

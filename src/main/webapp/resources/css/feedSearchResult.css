@@ -1,0 +1,218 @@
+* {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+	background-color: #F9F9F9;
+}
+
+div {
+	box-sizing: border-box;
+}
+
+#header {
+	border-top: 5px solid #FFF3D8;
+	background-color: white;
+}
+
+.nav {
+	width: 500px;
+	height: 30px;
+	overflow: hidden;
+}
+
+.nav>ul {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+.nav>ul li {
+	float: left;
+	list-style-type: none;
+	width: 50%;
+	height: 100%;
+	text-align: center;
+	color: #50401B;
+}
+
+#sub-content {
+	background-color: white;
+}
+
+#sub-content-title {
+	color: #50401B;
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+hr {
+	border: 0;
+	height: 5px;
+	background: #D6D3CA;
+}
+
+.beesImage {
+	border-radius: 50px;
+}
+
+.myBees, .recommend {
+	font-size: 0.9em;
+	text-decoration: none;
+	color: #50401B;
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+.myBees:hover, .recommend:hover {
+	color: #50401B;
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+.makeBeesBtn {
+	font-weight: bold;
+	text-decoration: none;
+	color: #50401B;
+	border-radius: 10px;
+	background-color: #F7D078;
+}
+
+.viewMoreBtn {
+	font-weight: bold;
+	text-decoration: none;
+	color: white;
+	border-radius: 25px;
+	background-color: #50401B;
+}
+
+.viewMoreBtn:hover {
+	font-weight: bold;
+	text-decoration: none;
+	color: white;
+	border-radius: 25px;
+	background-color: #50401B;
+}
+
+#main-content-title {
+	color: #50401B;
+	font-size: 1.5rem;
+	font-weight: 300;
+}
+
+.search-feed {
+	margin-top: 10px;
+	height: 200px;
+	padding: 10px 10px 10px 10px;
+	background-color: white;
+	box-shadow: 1px 1px 2px rgb(230, 230, 230);
+	display: none;
+}
+
+.search-feed-cont {
+	width: 75%;
+	height: 100%;
+	float: left;
+}
+
+.search-feed-title {
+	width: 100%;
+	height: 20%;
+	overflow: hidden;
+}
+
+.search-feed-bees-name {
+	color: #50401B;
+	line-height: 40px;
+	font-size: 1rem;
+	padding-left: 20px;
+	text-decoration: none;
+}
+
+.search-feed-bees-name:hover {
+	color: #50401B;
+	line-height: 40px;
+	font-size: 1rem;
+	padding-left: 20px;
+	text-decoration: none;
+}
+
+.search-feed-writer {
+	font-size: 0.9rem;
+}
+
+.search-feed-date {
+	font-size: 0.7rem;
+}
+
+.search-feed-main {
+	width: 100%;
+	height: 60%;
+}
+
+.search-feed-maintext {
+	padding: 5px 40px 0px 20px;
+	width: 100%;
+	height: 85%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 0.9rem;
+	font-weight: 200;
+}
+
+.search-feed-footer {
+	width: 100%;
+	height: 20%;
+	font-size: 0.9rem;
+}
+
+.search-feed-image {
+	width: 25%;
+	height: 100%;
+	line-height: 180px;
+	float: left;
+}
+
+.search-feed-image img {
+	max-height: 100%;
+	max-width: 100%;
+	background-color: white;
+}
+
+#feed-add-btn {
+	width: 100%;
+	height: 100%;
+	border-radius: 999px;
+	border: 0px solid white;
+	background-color: #50401b;
+	color: white;
+	outline: none;
+	margin: 20px 0px 20px 0px;
+}
+
+.categoryBtn {
+	font-size: 0.7em;
+	font-weight: bold;
+	text-decoration: none;
+	color: white;
+	padding: 5px 10px;
+	display: inline-block;
+	border: 1px solid #50401B;
+	border-radius: 25px;
+	background-color: #50401B;
+	margin-bottom: 10px;
+}
+
+.categoryBtn:hover {
+	font-size: 0.7em;
+	font-weight: bold;
+	text-decoration: none;
+	color: #50401B;
+	padding: 5px 10px;
+	display: inline-block;
+	border: 1px solid #50401B;
+	border-radius: 25px;
+	background-color: white;
+	margin-bottom: 10px;
+}

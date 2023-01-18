@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+
+<!-- context:property-placeholder location="classpath:database.properties"  /!-->
+<context:property-placeholder location="/WEB-INF/properties/*.properties" /> 
+
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	<property name="driverClassName" value="${db.driver}"></property>
+	<property name="url" value="${db.url}"></property>
+	<property name="username" value="${db.username}"></property>
+	<property name="password" value="${db.password}"></property>
+</bean>
+
+<!-- Mybatis에서 사용하는 객체 생성하는 코드 (SqlSession) -->
+<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+<property name="dataSource" ref="dataSource"></property>
+<!-- mapper 위치 등록 -->
+<property name="mapperLocations" value="classpath:/mybatis/mapper/*-mapper.xml"></property>
+<!-- config 위치 등록 -->
+<property name="configLocation" value="classpath:/mybatis/config/mybatis-config.xml"></property>
+</bean>
+
+
+<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+<constructor-arg index="0" ref="sqlSession"></constructor-arg>
+</bean>
+
+
+<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+<property name="dataSource" ref="dataSource"></property>
+</bean>
+
+<tx:advice id="txAdvice" transaction-manager="txManager">
+	<tx:attributes>
+		<tx:method name="select*" read-only="true"/>
+		<tx:method name="insert*"/>
+		<tx:method name="update*"/>
+		<tx:method name="delete*"/>
+	</tx:attributes>
+</tx:advice>	
+<!--AOP 설정 -->
+
+<aop:config>
+	<aop:pointcut expression="execution(* com.fourmeeting.bee..model.service.*Service.*(..))" id="txPointcut"/>
+	<aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice"></aop:advisor>
+</aop:config>
+
+</beans>

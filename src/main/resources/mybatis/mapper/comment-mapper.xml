@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="comment">
+<select id="commentSelectAll" resultType="feedComment">
+select
+comment_no as commentNo,
+comment_cont as commentCont,
+comment_date as commentDate,
+recomment_no as recommentNo,
+comment_del_yn as commentDelYN,
+user_no as userNo,
+board_no as boardNo,
+bees_no as beesNo,
+profile_img as profileImg,
+user_name as userName,
+member_no as memberNo
+from feed_comment
+where bees_no=#{beesNo}
+order by comment_date asc
+</select>
+<select id="commentSelectAllMyBees" resultType="feedComment">
+select
+comment_no as commentNo,
+comment_cont as commentCont,
+comment_date as commentDate,
+recomment_no as recommentNo,
+comment_del_yn as commentDelYN,
+user_no as userNo,
+board_no as boardNo,
+bees_no as beesNo,
+profile_img as profileImg,
+user_name as userName,
+member_no as memberNo
+from feed_comment
+where bees_no in
+<foreach collection="list" item="item" open="(" close=")" separator=",">
+#{item}
+</foreach>
+order by comment_date asc
+</select>
+<insert id="insertComment" parameterType="beesComment">
+insert into bees_comment values (
+comment_seq.nextval,
+#{commentCont},
+default,
+0,
+'N',
+#{userNo},
+#{boardNo},
+#{beesNo}
+)
+</insert>
+<insert id="insertRecomment" parameterType="beesComment">
+insert into bees_comment values (
+comment_seq.nextval,
+#{commentCont},
+default,
+#{recommentNo},
+'N',
+#{userNo},
+#{boardNo},
+#{beesNo}
+)
+</insert>
+<update id="updateComment" parameterType="beesComment">
+update bees_comment set comment_cont=#{commentCont} where comment_no=#{commentNo}
+</update>
+<update id="deleteComment">
+update bees_comment set comment_del_yn='Y' where comment_no=#{commentNo}
+</update>
+<update id="deleteCommentAll">
+update bees_comment set comment_del_yn='Y' where board_no=#{boardNo}
+</update>
+
+
+<!-- 마이페이지(정평주) -->
+<select id="mycomment" resultType="myComment">
+	select bees_no as beesNo,
+       bees_name as beesName,
+       member_no as memberNo,
+       user_name as userName,
+       comment_no as commentNo,
+       comment_cont as commentCont,
+       comment_date as commentDate,
+       comment_del_yn as commentDelYN,
+       board_cont as boardCont
+	from board
+	left join (select bees_no, user_no, comment_no, comment_cont, comment_date, comment_del_yn from bees_comment) using (bees_no)
+	left join (select user_no, user_name from bees_user) using(user_no)
+	left join (select bees_no, bees_name from bees) using (bees_no)
+	where member_no = #{memberNo}
+	and comment_del_yn = 'N'
+	order by comment_date desc
+</select>
+
+<select id="myPageBeesComment" parameterType="myComment" resultType="myComment">
+	select bees_no as beesNo,
+       bees_name as beesName,
+       member_no as memberNo,
+       user_name as userName,
+       comment_no as commentNo,
+       comment_cont as commentCont,
+       comment_date as commentDate,
+       comment_del_yn as commentDelYN,
+       board_cont as boardCont
+	from board
+	left join (select bees_no, user_no, comment_no, comment_cont, comment_date, comment_del_yn from bees_comment) using (bees_no)
+	left join (select user_no, user_name from bees_user) using(user_no)
+	left join (select bees_no, bees_name from bees) using (bees_no)
+	where member_no = #{memberNo}
+	and comment_del_yn = 'N'
+  	<if test = 'beesName != "1" and beesName != "" '>
+ 		 and bees_name = #{beesName}
+ 	</if>
+ 	order by comment_date desc
+</select>
+
+
+
+
+
+</mapper>

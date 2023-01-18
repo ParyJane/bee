@@ -1,0 +1,407 @@
+body{
+			font-family: 'Noto Sans KR', sans-serif;
+			 background-color: #f9f9f9; 
+		}
+		
+		.container{
+			width: 100%;
+			height: 100%;
+		}
+		 
+		/* 내 정보 네비바 ------------------------------------------------------*/
+		.mypage_navi_div{
+			padding: 0;
+		}
+		
+		#mypage_navi_ul{
+			width: 75%;
+			height: 300px;
+			list-style-type: none;
+			margin: 20px auto;
+			padding: 0px;
+		}
+		
+		#mypage_navi_ul a{
+ 			text-decoration: none;
+			color : #50401B;
+			display: block; /*a태그를 li영역 전체로 잡기 위함*/
+			position: relative;
+		}
+		
+		#mypage_navi_ul li{
+		 	border: 1px solid #ededed;
+		 	padding: 10px;
+		 	background-color: white;
+		}
+		
+		#mypage_navi_ul li i{
+			color : #50401B;
+			position: absolute;
+			left: 95%;
+			top: 20%;
+		}
+		
+		
+		
+		
+		/* 내 정보 피드 ------------------------------------------------------ */
+		.myInfo_div{
+			height: 800px;
+			margin: 20px 0;
+		}
+		
+		.myInfo_table{
+			width: 100%;
+			color : #50401B;
+			border: 1px solid #ededed;
+		}
+		
+		.myInfo_table input[type='text']{
+			padding-left: 5px;
+			/* color: #50401B; */
+			/* color: gray; */
+		}
+		
+		#member_profile{
+			border-radius: 70%;
+			background-color: #F7D078;
+			width: 50px;
+			height: 50px;
+			margin-bottom: 5px;
+			margin-top: 5px;
+			float: left;
+			background-size: cover;
+			border: 3px solid #F7D078;
+		}
+		
+		#member_name{
+			padding: 15px 75px;
+		}
+		
+		.border_Y{
+			border-top: 1px solid #ededed;
+		}
+		
+		.myInfo_table tr th{
+			padding: 10px 20px;
+			background-color: #dedede;
+		}
+		
+		.myInfo_table tr td{
+			padding: 20px 20px;
+			background-color: white;
+			/* font-size: 0.8rem; */
+		}
+		
+		.myInfo_table tr td:last-child{
+			text-align: right;
+			padding-right: 20px;
+		}
+		
+		.myInfo_table tr td:first-child{
+			/* font-size: 0.9rem; */
+		}
+		
+		input, select, #member_profile_modal_submit, #member_profile_modal_reset,
+		#member_pw_modify_modal_submit, #member_pw_modify_modal_reset,
+		#member_profile_modal_close, #member_pw_modify_modal_close,
+		#myInfo_del_modal_close, #myInfo_del_modal_reset,
+		#myInfo_del_modal_submit:focus{
+			outline: none;
+		}
+		
+		.myInfo_modify_btn, .myInfo_profile_btn, .myInfo_del_yn, .myInfo_pw_modify_btn{
+			color: #50401B;
+			background-color: white;
+			border: 1px solid #50401B;
+			border-radius: 8px;
+			line-height: 17px;
+			width: 45px;
+			height: 30px;
+		}
+		
+		.myInfo_hidden_btn{
+			color: #50401B;
+			background-color: #F7D078;
+			border: 0;
+			border-radius: 8px;
+			line-height: 17px;
+			width: 45px;
+			height: 30px;
+			font-weight: 500;
+		}
+		
+		
+		
+		
+		/* 휴대폰 번호 인증 -------------------------------------------------------------------------------------------------------------------------------- */
+		#member_phone_certified{
+			display: none;
+		} 
+		
+		.myInfo_table > #member_phone_certified{
+			width: 100%;
+		}
+		
+		#member_phone_certified td{
+			 padding-top: 0;
+		}
+		
+		#member_phone_certified_btn{
+			color: #F0AB0F; 
+			/* background-color: #FFF3D8; */
+			background-color: white;
+			border: 2px solid #F7D078; 
+			border-radius: 8px;
+			line-height: 17px;
+			width: 93px;
+			height: 30px;
+			font-weight: 500;
+		}
+		
+		
+		/*-------- 모달 --------*/
+
+	   .modal_bg {
+	   	  display: none;
+          position:fixed;
+          top:0;
+          left:0;
+          width:100%;
+          height:100%;
+          background:rgba(0, 0, 0, 0.3);
+          z-index: 30;
+        }   
+	   
+	   
+	   /*멤버 프로필 모달 ------------------------------------------------------*/
+       #member_profile_modal{
+            display: none;
+            position:absolute; 
+            background-color: white; 
+            width:300px;
+            height:370px; 
+            box-shadow: 1px 1px 2px rgb(230, 230, 230); 
+            border-radius: 25px; 
+            z-index: 99;
+            left: 45%;
+   			transform: translateX(-45%);
+   			top: 30%;
+   	        transform: translateY(-30%);
+        }
+        
+        #member_profile_modal_header{
+            width:100%; 
+            height:50px;
+            text-align: center; 
+            line-height:50px;
+        }
+
+        #member_profile_modal_close{
+            height: 50px; 
+            float:right; 
+            margin-right:15px; 
+            background-color: transparent; 
+            border:0px solid white; 
+            line-height:10px;
+        }
+        
+        #member_profile_modal_cont{
+            width:90%; 
+            height:230px; 
+            border-top: 1px solid lightgray;  
+            margin: auto;
+        }
+
+        #member_profile_modal_cont table{
+            width:90%; 
+            height:95%; 
+            margin: 10px auto;
+        }
+        
+        #member_profile_modal_cont table tr th{
+            padding-top: 20px;
+        }
+        
+        #member_profile_modal_footer{
+            width:100%; 
+            height:70px; 
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        #member_profile_modal_submit{
+            padding:5px 35px 5px 35px;
+            margin: 20px auto;
+            border-radius: 25px;
+            border:0px solid white; 
+            background-color:#6D6042;
+            color:white; 
+            font-size: 0.9rem; 
+            font-weight: 500;
+        }
+        
+        #member_profile_modal_reset{
+        	padding:5px 35px 5px 35px;
+            margin: 20px 10px 20px 0;
+            border-radius: 25px;
+            border:1px solid #6D6042; 
+            background-color: white;
+            color: #6D6042;
+            font-size: 0.9rem; 
+            font-weight: 500;
+        }
+        
+        #member_profile_modal_name{
+            font-size: 0.9rem;
+            font-weight: 400;
+            width:100%; 
+            height:35px;
+            padding: 0px 0px 0px 10px; 
+            border: 0.5px solid lightgray;
+            background-color: rgb(245, 245, 245); 
+        }
+
+        #member_profile_img{
+			border-radius: 70%;
+			background-color: white;
+			border: 3px solid #F7D078;
+			width: 120px;
+			height: 120px;
+			margin: 5px auto;
+			background-size: cover;
+		}
+		
+		#member_profile_icon{
+			border-radius: 70%;
+			border: 1px solid white;
+			background-color: silver;
+			width: 35px;
+			height: 35px;
+			margin-left: 55%;
+   	        transform: translateY(-100%);
+		}
+		
+		#member_profile_icon:hover{
+			cursor: pointer;
+		}
+		
+		#member_profile_icon i {
+			line-height: 32px;
+			color: white;
+			size: 5px;
+		}
+
+
+       /*비밀번호 변경 & 회원 탈퇴 모달------------------------------------------------------*/
+       #member_pw_modify_modal, 
+       #myInfo_del_modal{
+            display: none;
+            position:absolute; 
+            background-color: white; 
+            width:400px;
+            height:310px; 
+            box-shadow: 1px 1px 2px rgb(230, 230, 230); 
+            border-radius: 25px; 
+            z-index: 99;
+            left: 40%;
+   			transform: translateX(-40%);
+   			top: 30%;
+   	        transform: translateY(-30%);
+        }
+        
+        #member_pw_modify_modal p{
+        	margin: 0;
+        	text-align: left;
+        }
+        
+        #myInfo_del_modal_cont p{
+        	margin: 0;
+        	text-align: left;
+        	font-size: 0.82rem;
+        }
+        
+        #member_pw_modify_modal_header, 
+        #myInfo_del_modal_header{
+            width:100%; 
+            height:50px;
+            text-align: center; 
+            line-height:50px;
+        }
+
+        #member_pw_modify_modal_close, 
+        #myInfo_del_modal_close{
+            height: 50px; 
+            float:right; 
+            margin-right:15px; 
+            background-color: transparent; 
+            border:0px solid white; 
+            line-height:10px;
+        }
+        
+        #member_pw_modify_modal_cont,
+        #myInfo_del_modal_cont{
+            width:90%; 
+            height:180px; 
+            border-top: 1px solid lightgray;  
+            margin: auto;
+        }
+
+        #member_pw_modify_modal_cont table, 
+        #myInfo_del_modal_cont table{
+            width:90%; 
+            height:95%; 
+            margin: 10px auto;
+        }
+        
+        #member_pw_modify_modal_cont table tr td{
+            padding: 10px 0 0 0;
+            
+        }
+        
+        #myInfo_del_modal_cont > table > tr > td{
+         	padding: 0; 
+        }
+        
+        #member_pw_modify_modal_footer, 
+        #myInfo_del_modal_footer{
+            width:100%; 
+            height:70px; 
+            text-align: center;
+        }
+        
+        #member_pw_modify_modal_submit,
+        #myInfo_del_modal_submit{
+            padding:5px 35px 5px 35px;
+            margin: 20px auto;
+            border-radius: 25px;
+            border:0px solid white; 
+            background-color:#6D6042;
+            color:white; 
+            font-size: 0.9rem; 
+            font-weight: 500;
+        }
+        
+        #member_pw_modify_modal_reset,
+        #myInfo_del_modal_reset{
+        	padding:5px 35px 5px 35px;
+            margin: 20px 10px 20px 0;
+            border-radius: 25px;
+            border:1px solid #6D6042; 
+            background-color: white;
+            color: #6D6042;
+            font-size: 0.9rem; 
+            font-weight: 500;
+        }
+        
+        #member_pw_modify_modal_input,
+        #member_repw_modify_modal_input,
+        #myInfo_del_modal_pw_check{
+            font-size: 0.9rem;
+            font-weight: 400;
+            width:100%; 
+            height:35px;
+            padding: 0px 0px 0px 10px; 
+            border: 0.5px solid lightgray;
+            background-color: rgb(245, 245, 245); 
+        }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="answer">
+  
+  	<select id="insertAnswer" parameterType="answer">
+  		insert into answer values(
+  		   ANSWER_NO_SEQ.nextval,
+   		   #{questionNo},
+    	   #{adminNo},
+    	   #{memberNo},
+   		   #{answerCont},
+   		   systimestamp,
+    	   'N' )
+  	</select>
+  	
+  	<update id="questionReply">
+  		update question set reply_yn = 'Y'
+		where question_no = #{questionNo}
+  	</update>
+  
+  
+  	<select id="selectOneAnswer" resultType="answer">
+	 	select 
+	 		 answer_no as answerNo,
+	 		 question_no as questionNo,
+	 		 admin_no as adminNo,
+			 member_no as memberNo,
+		     answer_cont as answerCont,
+			 answer_date as answerDate,
+			 answer_del_yn as answerDelYN
+	 	 from answer 
+	 	 where question_no = #{questionNo}
+	 	 and answer_del_yn = 'N'
+	 </select>
+	 
+	 
+	 <update id="answerDelete">
+  		update answer set answer_del_yn = 'Y'
+		where question_no = #{questionNo}
+  	</update>
+  	
+  	<update id="answerDeleteQ">
+  		update question set reply_yn = 'N'
+		where question_no = #{questionNo}
+  	</update>
+  	
+  	<update id="answerModify" parameterType="answer">
+  		update answer set answer_cont = #{answerCont},
+  						  admin_no = #{adminNo}
+		where question_no = #{questionNo}
+		and answer_del_yn = 'N'
+  	</update>
+  
+</mapper>

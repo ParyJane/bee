@@ -1,0 +1,41 @@
+*{
+box-sizing:border-box;
+}
+.img_content{
+width:90%;
+
+padding: 0;
+margin:0 auto;
+
+}
+.img_head{
+border-bottom:1px solid gray;
+margin-bottom:15px;
+padding-top:27.8px;
+padding-bottom:27.8px;
+}
+
+
+H3{
+margin-top:0;
+margin-bottom:15px;
+}
+#upImgFiles{
+display:none;
+}
+#btn-upload{
+float:right;
+margin-right:10px;
+background-color:white;
+border:none;
+}
+#btn-upload:focus{
+outline:none;
+}
+#spaceImage{
+margin-top:15px;
+
+}
+#imageviews{
+margin:10px;
+}

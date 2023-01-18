@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="beesUser">
+<select id="userCount" resultType="int">
+select count(*) as userCount
+from bees_user
+where bees_no = #{beesNo}
+and user_block_yn='N'
+and user_del_yn='N'
+and user_auth_yn='Y'
+</select>
+<select id="userSelectOne" resultType="beesUser" parameterType="userSelect">
+select
+user_no as userNo,
+bees_no as beesNo,
+member_no as memberNo,
+user_name as userName,
+user_class as userClass,
+user_block_yn as userBlockYN,
+user_del_yn as userDelYN,
+user_auth_yn as userAuthYN
+from bees_user
+where member_no = #{memberNo}
+and bees_no = #{beesNo}
+and user_del_yn='N'
+</select>
+<insert id="insertBeesUser" parameterType="beesUser">
+insert into bees_user values(
+user_seq.nextval, #{beesNo}, #{memberNo}, #{userName}, default, default, default, default, default, default)
+</insert>
+<select id="selectAllBeesNo" resultType="int">
+select bees_no from bees_user where member_no=#{memberNo} and user_auth_yn='Y' and user_del_yn='N' and user_block_yn='N'
+</select>
+
+<!-- 수정예정 -->
+	<update id="updateBeesUserRefusal" >
+		update bees_user
+		set user_auth_yn='N'
+		where user_name=#{userName}
+	</update>
+	
+	<update id="updateBeesUserApproval" >
+		update bees_user
+		set user_auth_yn='Y', user_auth_date=systimestamp
+		where user_name=#{userName} and user_block_yn='N'
+	</update>
+	
+	<select id="selectBeesUserClass" parameterType="beesUser" resultType="beesUser">
+	
+		select
+		USER_NO as userNo,
+		BEES_NO as beesNo,
+		MEMBER_NO as memberNo,
+		USER_NAME as userName,
+		USER_CLASS as userClass,
+		USER_BLOCK_YN as userBlockYN,
+		USER_DEL_YN as userDelYN,
+		USER_AUTH_YN as userAuthYN,
+      	USER_ASK_DATE as userAskDate,
+        USER_AUTH_DATE as userAuthDate
+        FROM BEES_USER WHERE MEMBER_NO=#{memberNo} AND BEES_NO=#{beesNo}
+        
+	</select>
+	
+	<select id="selectBeesUserWaiters" resultType="BeesUserList">
+		select
+		BEES_USER.USER_NO as userNo,
+		BEES_USER.BEES_NO as beesNo,
+		BEES_USER.MEMBER_NO as memberNo,
+		BEES_USER.USER_NAME as userName,
+		BEES_USER.USER_CLASS as userClass,
+		BEES_USER.USER_BLOCK_YN as userBlockYN,
+		BEES_USER.USER_DEL_YN as userDelYN,
+		BEES_USER.USER_AUTH_YN as userAuthYN,
+        BEES_USER.USER_ASK_DATE as userAskDate,
+        BEES_USER.USER_AUTH_DATE as userAuthDate,
+        MEMBER.MEMBER_ID as memberId,
+		MEMBER.PROFILE_IMG as profileImg
+        FROM BEES_USER left join member on bees_user.member_no = member.member_no  WHERE USER_AUTH_YN='W' AND BEES_NO=#{beesNo}
+	</select>
+	
+	<select id="selectUserNo" parameterType="beesUser" resultType="beesUser" >
+		select
+		BEES_USER.USER_NO as userNo,
+		BEES_USER.BEES_NO as beesNo,
+		BEES_USER.MEMBER_NO as memberNo,
+		BEES_USER.USER_NAME as userName,
+		BEES_USER.USER_CLASS as userClass,
+		BEES_USER.USER_BLOCK_YN as userBlockYN,
+		BEES_USER.USER_DEL_YN as userDelYN,
+		BEES_USER.USER_AUTH_YN as userAuthYN,
+      	BEES_USER.USER_ASK_DATE as userAskDate,
+        BEES_USER.USER_AUTH_DATE as userAuthDate
+		from member left join bees_user on member.member_no=bees_user.member_no
+		where BEES_USER.member_no=#{memberNo} and BEES_USER.bees_no='28' <!-- BeesNo -->
+
+	</select>
+	
+	
+	
+	<!-- 관리자페이지(정평주) -->
+	<select id="beesJoinAsk" resultType="myBeesUser">
+		select 
+			user_no as userNo,
+			bees_no as beesNo,
+			member_no as memberNo,
+			user_name as userName,
+			user_class as userClass,
+			user_block_yn as userBlockYN,
+			user_del_yn as userDelYN,
+			user_auth_yn as userAuthYN,
+			user_ask_date as userAskDate,
+			user_auth_date as userAuthDate,
+			host_name as hostName,
+			bees_name as beesName
+		from bees_user 
+		   left join (select bees_no, user_name as host_name 
+		   			from bees_user 
+				   	where user_class='host') 
+				using(bees_no) 
+			left join (select bees_no, bees_name as bees_name 
+					from bees) 
+				 using(bees_no) 
+		where member_no=#{memberNo}
+		and user_class!='host' 
+		and user_auth_yn='W'
+		order by user_ask_date desc
+	</select>
+	
+	<select id="beesJoinHistory" parameterType="myBeesUser" resultType="myBeesUser">
+	 select * from
+	(select rownum num, A.* from
+  		(select 
+			user_no as userNo,
+			bees_no as beesNo,
+			member_no as memberNo,
+			user_name as userName,
+			user_class as userClass,
+			user_block_yn as userBlockYN,
+			user_del_yn as userDelYN,
+			user_auth_yn as userAuthYN,
+			user_ask_date as userAskDate,
+			user_auth_date as userAuthDate,
+			host_name as hostName,
+			bees_name as beesName
+		from bees_user 
+		   left join (select bees_no, user_name as host_name 
+		   			from bees_user 
+				   	where user_class='host') 
+				using(bees_no) 
+			left join (select bees_no, bees_name as bees_name 
+					from bees) 
+				 using(bees_no) 
+		where member_no=#{memberNo}
+		and user_class!='host' 
+		order by user_ask_date desc) A) 
+    where num between #{start} and #{end}
+	</select>
+	
+	<select id="totalbeesJoinHistory" resultType="pagingVo">
+	 	 select count(*) as totalPage from bees_user 
+	 	 where member_no= #{memberNo}
+	 	 and user_class!='host'
+	</select>
+	
+	<delete id="joinQnaCancel">
+		delete from bees_user 
+		where user_no = #{userNo}
+	</delete>
+
+</mapper>
